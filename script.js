@@ -1,151 +1,140 @@
-// Configurações e constantes
-const CONFIG = {
-  CHAVE_NOTICIAS: "jornal_neuza_noticias",
-  CHAVE_COMENTARIOS: "jornal_neuza_comentarios",
-  CHAVE_EVENTOS: "jornal_neuza_eventos",
-  CHAVE_LOGIN: "jornal_neuza_login",
-  CHAVE_USUARIO: "jornal_neuza_usuario",
-  SENHA_GLOBAL: "#Jornal12Neuza2026@#",
-  USUARIOS: {
-    Gustavo: "#Jornal12Neuza2026@#",
-    Lara: "#Jornal12Neuza2026@#",
-    Sergio: "#Jornal12Neuza2026@#",
-    Isabel: "#Jornal12Neuza2026@#"
-  }
-};
+// ============================================
+// CONFIGURAÇÃO DO SUPABASE
+// ============================================
+const SUPABASE_URL = 'https://SEU_PROJETO.supabase.co';
+const SUPABASE_KEY = 'SUA_ANON_KEY_AQUI';
 
-// Dados iniciais
-let noticias = JSON.parse(localStorage.getItem(CONFIG.CHAVE_NOTICIAS)) || [
-  {
-    id: 1,
-    titulo: "Alunos participam da Feira de Ciências",
-    autor: "Equipe do Jornal Escolar",
-    texto: "Estudantes apresentaram experiências e projetos desenvolvidos durante as aulas de ciências. O evento contou com a participação de todas as turmas do ensino fundamental.",
-    imagem: "",
-    data: "19/08/2026"
-  },
-  {
-    id: 2,
-    titulo: "Semana da Leitura terá atividades especiais",
-    autor: "Coordenação escolar",
-    texto: "A escola preparou rodas de conversa, apresentações teatrais e atividades interativas para incentivar o gosto pela leitura entre os estudantes.",
-    imagem: "",
-    data: "19/08/2026"
-  }
-];
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-let comentarios = JSON.parse(localStorage.getItem(CONFIG.CHAVE_COMENTARIOS)) || [];
+// ============================================
+// ELEMENTOS DO DOM
+// ============================================
+const formNoticia = document.getElementById("formNoticia");
+const formComentario = document.getElementById("formComentario");
+const formEvento = document.getElementById("formEvento");
 
-let eventos = JSON.parse(localStorage.getItem(CONFIG.CHAVE_EVENTOS)) || [
-  {
-    id: 1,
-    titulo: "Feira de Ciências",
-    data: "30 de agosto de 2026",
-    descricao: "Apresentação de experiências e projetos dos estudantes de ciências. Venha prestigiar o trabalho dos nossos alunos!"
-  },
-  {
-    id: 2,
-    titulo: "Gincana escolar",
-    data: "12 de setembro de 2026",
-    descricao: "Atividades esportivas, culturais e recreativas para toda a comunidade escolar. Participe!"
-  },
-  {
-    id: 3,
-    titulo: "Semana da Leitura",
-    data: "20 de setembro de 2026",
-    descricao: "Rodas de conversa, apresentações teatrais e diversas atividades para incentivar o hábito da leitura."
-  }
-];
+const listaNoticias = document.getElementById("listaNoticias");
+const listaComentarios = document.getElementById("listaComentarios");
+const listaEventos = document.getElementById("listaEventos");
 
-// Elementos do DOM
-const elementos = {
-  forms: {
-    noticia: document.getElementById("formNoticia"),
-    comentario: document.getElementById("formComentario"),
-    evento: document.getElementById("formEvento")
-  },
-  listas: {
-    noticias: document.getElementById("listaNoticias"),
-    comentarios: document.getElementById("listaComentarios"),
-    eventos: document.getElementById("listaEventos")
-  },
-  vazios: {
-    noticias: document.getElementById("semNoticias"),
-    comentarios: document.getElementById("semComentarios"),
-    eventos: document.getElementById("semEventos")
-  },
-  admin: {
-    areaLogin: document.getElementById("areaLogin"),
-    painelAdmin: document.getElementById("painelAdmin"),
-    painelEventos: document.getElementById("painelEventos"),
-    login: document.getElementById("loginAdmin"),
-    senha: document.getElementById("senhaAdmin"),
-    btnEntrar: document.getElementById("btnEntrar"),
-    btnSair: document.getElementById("btnSair"),
-    msgLogin: document.getElementById("msgLogin"),
-    usuario: document.getElementById("usuarioConectado"),
-    btnMostrarSenha: document.getElementById("btnMostrarSenha"),
-    imagem: document.getElementById("imagem"),
-    preview: document.getElementById("previewImagem"),
-    btnLimparNoticia: document.getElementById("btnLimparNoticia"),
-    btnLimparComentario: document.getElementById("btnLimparComentario"),
-    btnCancelarEvento: document.getElementById("btnCancelarEvento")
-  },
-  stats: {
-    noticias: document.getElementById("totalNoticias"),
-    eventos: document.getElementById("totalEventos"),
-    comentarios: document.getElementById("totalComentarios")
-  },
-  btnVoltarTopo: document.getElementById("btnVoltarTopo"),
-  menuLinks: document.querySelectorAll(".menu-link")
-};
+const semNoticias = document.getElementById("semNoticias");
+const semComentarios = document.getElementById("semComentarios");
+const semEventos = document.getElementById("semEventos");
 
-// Funções utilitárias
+const campoImagem = document.getElementById("imagem");
+const previewImagem = document.getElementById("previewImagem");
+
+const areaLogin = document.getElementById("areaLogin");
+const painelAdmin = document.getElementById("painelAdmin");
+const painelEventos = document.getElementById("painelEventos");
+
+const loginAdmin = document.getElementById("loginAdmin");
+const senhaAdmin = document.getElementById("senhaAdmin");
+
+const botaoEntrar = document.getElementById("btnEntrar");
+const botaoSair = document.getElementById("btnSair");
+const botaoVoltarTopo = document.getElementById("btnVoltarTopo");
+
+const mostrarSenhaBtn = document.getElementById("btnMostrarSenha");
+const botaoCancelarNoticia = document.getElementById("btnLimparNoticia");
+const botaoCancelarComentario = document.getElementById("btnLimparComentario");
+const botaoCancelarEvento = document.getElementById("btnCancelarEvento");
+
+const mensagemLogin = document.getElementById("msgLogin");
+const usuarioConectado = document.getElementById("usuarioConectado");
+
+const totalNoticiasEl = document.getElementById("totalNoticias");
+const totalEventosEl = document.getElementById("totalEventos");
+const totalComentariosEl = document.getElementById("totalComentarios");
+
+// ============================================
+// FUNÇÕES UTILITÁRIAS
+// ============================================
 function escaparHTML(texto) {
   const div = document.createElement("div");
   div.textContent = texto;
   return div.innerHTML;
 }
 
-function salvarDados() {
-  localStorage.setItem(CONFIG.CHAVE_NOTICIAS, JSON.stringify(noticias));
-  localStorage.setItem(CONFIG.CHAVE_COMENTARIOS, JSON.stringify(comentarios));
-  localStorage.setItem(CONFIG.CHAVE_EVENTOS, JSON.stringify(eventos));
-  atualizarEstatisticas();
-}
-
-function estaLogado() {
-  return sessionStorage.getItem(CONFIG.CHAVE_LOGIN) === "true";
-}
-
 function atualizarEstatisticas() {
-  elementos.stats.noticias.textContent = noticias.length;
-  elementos.stats.eventos.textContent = eventos.length;
-  elementos.stats.comentarios.textContent = comentarios.length;
+  totalNoticiasEl.textContent = '...';
+  totalEventosEl.textContent = '...';
+  totalComentariosEl.textContent = '...';
 }
 
-// Renderização
-function renderizarNoticias() {
-  elementos.listas.noticias.innerHTML = "";
+// ============================================
+// CARREGAR DADOS DO SUPABASE
+// ============================================
+async function carregarNoticias() {
+  const { data, error } = await supabase
+    .from('noticias')
+    .select('*')
+    .order('criado_em', { ascending: false });
 
-  if (noticias.length === 0) {
-    elementos.vazios.noticias.style.display = "block";
+  if (error) {
+    console.error('Erro ao carregar notícias:', error);
+    return [];
+  }
+
+  return data || [];
+}
+
+async function carregarComentarios() {
+  const { data, error } = await supabase
+    .from('comentarios')
+    .select('*')
+    .order('criado_em', { ascending: false });
+
+  if (error) {
+    console.error('Erro ao carregar comentários:', error);
+    return [];
+  }
+
+  return data || [];
+}
+
+async function carregarEventos() {
+  const { data, error } = await supabase
+    .from('eventos')
+    .select('*')
+    .order('criado_em', { ascending: false });
+
+  if (error) {
+    console.error('Erro ao carregar eventos:', error);
+    return [];
+  }
+
+  return data || [];
+}
+
+// ============================================
+// RENDERIZAÇÃO
+// ============================================
+function renderizarNoticias(noticias) {
+  listaNoticias.innerHTML = "";
+
+  if (!noticias || noticias.length === 0) {
+    semNoticias.style.display = "block";
     return;
   }
 
-  elementos.vazios.noticias.style.display = "none";
+  semNoticias.style.display = "none";
 
   noticias.forEach(noticia => {
     const card = document.createElement("article");
     card.className = "card-noticia";
 
-    const imagem = noticia.imagem 
-      ? `<img src="${noticia.imagem}" alt="${escaparHTML(noticia.titulo)}" loading="lazy">` 
+    const imagem = noticia.imagem_url 
+      ? `<img src="${noticia.imagem_url}" alt="${escaparHTML(noticia.titulo)}" loading="lazy">` 
       : "";
 
-    const btnExcluir = estaLogado()
+    const estaLogado = usuarioConectado.textContent.trim() !== "";
+    const btnExcluir = estaLogado
       ? `<button class="botao botao-perigo" style="position:absolute;top:15px;right:15px;padding:8px 12px;font-size:12px;" data-id="${noticia.id}" data-tipo="noticia">🗑️ Excluir</button>`
       : "";
+
+    const autor = noticia.autor || 'Administrador';
+    const data = noticia.criado_em ? new Date(noticia.criado_em).toLocaleDateString('pt-BR') : '';
 
     card.innerHTML = `
       ${btnExcluir}
@@ -153,58 +142,66 @@ function renderizarNoticias() {
       ${imagem}
       <p>${escaparHTML(noticia.texto)}</p>
       <div class="meta-noticia">
-        📝 <strong>${escaparHTML(noticia.autor)}</strong> • 📅 ${escaparHTML(noticia.data)}
+        📝 <strong>${escaparHTML(autor)}</strong> • 📅 ${data}
       </div>
     `;
 
-    elementos.listas.noticias.appendChild(card);
+    listaNoticias.appendChild(card);
   });
+
+  totalNoticiasEl.textContent = noticias.length;
 }
 
-function renderizarComentarios() {
-  elementos.listas.comentarios.innerHTML = "";
+function renderizarComentarios(comentarios) {
+  listaComentarios.innerHTML = "";
 
-  if (comentarios.length === 0) {
-    elementos.vazios.comentarios.style.display = "block";
+  if (!comentarios || comentarios.length === 0) {
+    semComentarios.style.display = "block";
     return;
   }
 
-  elementos.vazios.comentarios.style.display = "none";
+  semComentarios.style.display = "none";
 
   comentarios.forEach(comentario => {
     const card = document.createElement("article");
     card.className = "card-comentario";
 
-    const btnExcluir = estaLogado()
+    const estaLogado = usuarioConectado.textContent.trim() !== "";
+    const btnExcluir = estaLogado
       ? `<button class="botao botao-perigo" style="position:absolute;top:15px;right:15px;padding:8px 12px;font-size:12px;" data-id="${comentario.id}" data-tipo="comentario">🗑️ Excluir</button>`
       : "";
+
+    const data = comentario.criado_em ? new Date(comentario.criado_em).toLocaleDateString('pt-BR') : '';
 
     card.innerHTML = `
       ${btnExcluir}
       <strong>👤 ${escaparHTML(comentario.nome)}</strong>
       <p>${escaparHTML(comentario.texto)}</p>
-      <small>📅 ${escaparHTML(comentario.data)}</small>
+      <small>📅 ${data}</small>
     `;
 
-    elementos.listas.comentarios.appendChild(card);
+    listaComentarios.appendChild(card);
   });
+
+  totalComentariosEl.textContent = comentarios.length;
 }
 
-function renderizarEventos() {
-  elementos.listas.eventos.innerHTML = "";
+function renderizarEventos(eventos) {
+  listaEventos.innerHTML = "";
 
-  if (eventos.length === 0) {
-    elementos.vazios.eventos.style.display = "block";
+  if (!eventos || eventos.length === 0) {
+    semEventos.style.display = "block";
     return;
   }
 
-  elementos.vazios.eventos.style.display = "none";
+  semEventos.style.display = "none";
 
   eventos.forEach(evento => {
     const card = document.createElement("article");
     card.className = "card-evento";
 
-    const btnExcluir = estaLogado()
+    const estaLogado = usuarioConectado.textContent.trim() !== "";
+    const btnExcluir = estaLogado
       ? `<button class="botao botao-perigo" style="position:absolute;top:15px;right:15px;padding:8px 12px;font-size:12px;" data-id="${evento.id}" data-tipo="evento">🗑️ Excluir</button>`
       : "";
 
@@ -215,53 +212,210 @@ function renderizarEventos() {
       <p>${escaparHTML(evento.descricao)}</p>
     `;
 
-    elementos.listas.eventos.appendChild(card);
+    listaEventos.appendChild(card);
   });
+
+  totalEventosEl.textContent = eventos.length;
 }
 
-function atualizarInterface() {
-  const logado = estaLogado();
+// ============================================
+// AUTENTICAÇÃO
+// ============================================
+async function verificarLogin() {
+  const { data: { user } } = await supabase.auth.getUser();
 
-  elementos.admin.areaLogin.classList.toggle("oculto", logado);
-  elementos.admin.painelAdmin.classList.toggle("oculto", !logado);
-  elementos.admin.painelEventos.classList.toggle("oculto", !logado);
+  if (user) {
+    areaLogin.classList.add("oculto");
+    painelAdmin.classList.remove("oculto");
+    painelEventos.classList.remove("oculto");
 
-  if (logado) {
-    const usuario = sessionStorage.getItem(CONFIG.CHAVE_USUARIO);
-    const nomes = { gustavo: "Gustavo", lara: "Lara", sergio: "Sergio", isabel: "Isabel" };
-    elementos.admin.usuario.textContent = nomes[usuario] || "";
+    const email = user.email || '';
+    const nome = email.split('@')[0];
+    usuarioConectado.textContent = nome.charAt(0).toUpperCase() + nome.slice(1);
   } else {
-    elementos.admin.usuario.textContent = "";
+    areaLogin.classList.remove("oculto");
+    painelAdmin.classList.add("oculto");
+    painelEventos.classList.add("oculto");
+    usuarioConectado.textContent = "";
+  }
+}
+
+mostrarSenhaBtn.addEventListener("click", () => {
+  const tipo = senhaAdmin.type;
+  senhaAdmin.type = tipo === "password" ? "text" : "password";
+  mostrarSenhaBtn.textContent = tipo === "password" ? "🙈" : "👁️";
+});
+
+botaoEntrar.addEventListener("click", async () => {
+  const email = loginAdmin.value.trim().toLowerCase();
+  const senha = senhaAdmin.value.trim();
+  const emailCompleto = `${email}@escola.com.br`;
+
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: emailCompleto,
+    password: senha
+  });
+
+  if (error) {
+    mensagemLogin.textContent = "❌ Login ou senha incorretos.";
+    mensagemLogin.style.cssText = "color: var(--cor-perigo); background: #ffebee;";
+  } else {
+    mensagemLogin.textContent = "✅ Login realizado com sucesso!";
+    mensagemLogin.style.cssText = "color: var(--cor-sucesso); background: #d4edda;";
+
+    loginAdmin.value = "";
+    senhaAdmin.value = "";
+    mostrarSenhaBtn.textContent = "👁️";
+
+    setTimeout(() => {
+      mensagemLogin.textContent = "";
+      verificarLogin();
+      carregarETodosDados();
+    }, 1500);
+  }
+});
+
+senhaAdmin.addEventListener("keydown", e => {
+  if (e.key === "Enter") botaoEntrar.click();
+});
+
+botaoSair.addEventListener("click", async () => {
+  if (confirm("🚪 Deseja realmente sair?")) {
+    await supabase.auth.signOut();
+    mensagemLogin.textContent = "👋 Você saiu da área administrativa.";
+    mensagemLogin.style.cssText = "color: var(--cor-cinza); background: var(--cor-fundo);";
+    verificarLogin();
+  }
+});
+
+// ============================================
+// UPLOAD DE IMAGENS
+// ============================================
+async function uploadImagem(arquivo) {
+  const nomeArquivo = `noticia_${Date.now()}_${arquivo.name}`;
+
+  const { data, error } = await supabase.storage
+    .from('imagens-jornal')
+    .upload(nomeArquivo, arquivo);
+
+  if (error) {
+    console.error('Erro no upload:', error);
+    return null;
   }
 
-  renderizarNoticias();
-  renderizarComentarios();
-  renderizarEventos();
-  atualizarEstatisticas();
+  const { data: urlData } = supabase.storage
+    .from('imagens-jornal')
+    .getPublicUrl(nomeArquivo);
+
+  return urlData.publicUrl;
 }
 
-// Event Listeners
-elementos.admin.btnMostrarSenha.addEventListener("click", () => {
-  const tipo = elementos.admin.senha.type;
-  elementos.admin.senha.type = tipo === "password" ? "text" : "password";
-  elementos.admin.btnMostrarSenha.textContent = tipo === "password" ? "🙈" : "👁️";
-});
+// ============================================
+// SALVAR DADOS NO SUPABASE
+// ============================================
+async function salvarNoticia(titulo, autor, texto, imagemUrl) {
+  const { data: { user } } = await supabase.auth.getUser();
 
-[elementos.admin.btnLimparNoticia, elementos.admin.btnLimparComentario, elementos.admin.btnCancelarEvento].forEach(btn => {
-  btn?.addEventListener("click", function() {
-    const form = this.closest("form");
-    form?.reset();
-    if (this.id === "btnLimparNoticia") {
-      elementos.admin.preview.innerHTML = "";
-    }
-  });
-});
+  if (!user) {
+    alert("⚠️ Você precisa estar logado para publicar.");
+    return false;
+  }
 
-elementos.admin.imagem.addEventListener("change", function() {
+  const { error } = await supabase
+    .from('noticias')
+    .insert([
+      {
+        titulo: titulo,
+        autor: autor,
+        texto: texto,
+        imagem_url: imagemUrl,
+        criado_por: user.id
+      }
+    ]);
+
+  if (error) {
+    console.error('Erro ao salvar notícia:', error);
+    return false;
+  }
+
+  return true;
+}
+
+async function salvarEvento(titulo, data, descricao) {
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    alert("⚠️ Você precisa estar logado para criar eventos.");
+    return false;
+  }
+
+  const { error } = await supabase
+    .from('eventos')
+    .insert([
+      {
+        titulo: titulo,
+        data: data,
+        descricao: descricao,
+        criado_por: user.id
+      }
+    ]);
+
+  if (error) {
+    console.error('Erro ao salvar evento:', error);
+    return false;
+  }
+
+  return true;
+}
+
+async function salvarComentario(nome, texto) {
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    alert("⚠️ Você precisa estar logado para comentar.");
+    return false;
+  }
+
+  const { error } = await supabase
+    .from('comentarios')
+    .insert([
+      {
+        nome: nome,
+        texto: texto,
+        criado_por: user.id
+      }
+    ]);
+
+  if (error) {
+    console.error('Erro ao salvar comentário:', error);
+    return false;
+  }
+
+  return true;
+}
+
+async function excluirItem(tabela, id) {
+  const { error } = await supabase
+    .from(tabela)
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.error('Erro ao excluir:', error);
+    return false;
+  }
+
+  return true;
+}
+
+// ============================================
+// EVENT LISTENERS DOS FORMULÁRIOS
+// ============================================
+campoImagem.addEventListener("change", function() {
   const arquivo = this.files[0];
 
   if (!arquivo) {
-    elementos.admin.preview.innerHTML = "";
+    previewImagem.innerHTML = "";
     return;
   }
 
@@ -279,62 +433,19 @@ elementos.admin.imagem.addEventListener("change", function() {
 
   const leitor = new FileReader();
   leitor.onload = e => {
-    elementos.admin.preview.innerHTML = `
+    previewImagem.innerHTML = `
       <p><strong>📷 Pré-visualização:</strong></p>
-      <img src="${e.target.result}" alt="Pré-visualização">
+      <img src="${e.target.result}" alt="Pré-visualização" class="preview-foto">
     `;
   };
   leitor.readAsDataURL(arquivo);
 });
 
-elementos.admin.btnEntrar.addEventListener("click", () => {
-  const login = elementos.admin.login.value.trim().toLowerCase();
-  const senha = elementos.admin.senha.value.trim();
-  const usuarios = {
-    gustavo: CONFIG.SENHA_GLOBAL,
-    lara: CONFIG.SENHA_GLOBAL,
-    sergio: CONFIG.SENHA_GLOBAL,
-    isabel: CONFIG.SENHA_GLOBAL
-  };
-
-  if (usuarios[login] && senha === usuarios[login]) {
-    sessionStorage.setItem(CONFIG.CHAVE_LOGIN, "true");
-    sessionStorage.setItem(CONFIG.CHAVE_USUARIO, login);
-    
-    elementos.admin.login.value = "";
-    elementos.admin.senha.value = "";
-    elementos.admin.btnMostrarSenha.textContent = "👁️";
-    elementos.admin.msgLogin.textContent = "✅ Login realizado com sucesso!";
-    elementos.admin.msgLogin.style.cssText = "color: var(--cor-sucesso); background: #d4edda;";
-
-    setTimeout(() => {
-      elementos.admin.msgLogin.textContent = "";
-      atualizarInterface();
-    }, 1500);
-  } else {
-    elementos.admin.msgLogin.textContent = "❌ Login ou senha incorretos.";
-    elementos.admin.msgLogin.style.cssText = "color: var(--cor-perigo); background: #ffebee;";
-  }
-});
-
-elementos.admin.senha.addEventListener("keydown", e => {
-  if (e.key === "Enter") elementos.admin.btnEntrar.click();
-});
-
-elementos.admin.btnSair.addEventListener("click", () => {
-  if (confirm("🚪 Deseja realmente sair?")) {
-    sessionStorage.removeItem(CONFIG.CHAVE_LOGIN);
-    sessionStorage.removeItem(CONFIG.CHAVE_USUARIO);
-    elementos.admin.msgLogin.textContent = "👋 Você saiu da área administrativa.";
-    elementos.admin.msgLogin.style.cssText = "color: var(--cor-cinza); background: var(--cor-fundo);";
-    atualizarInterface();
-  }
-});
-
-elementos.forms.noticia.addEventListener("submit", e => {
+formNoticia.addEventListener("submit", async e => {
   e.preventDefault();
 
-  if (!estaLogado()) {
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
     alert("⚠️ Entre como administrador para publicar.");
     return;
   }
@@ -342,45 +453,41 @@ elementos.forms.noticia.addEventListener("submit", e => {
   const titulo = document.getElementById("titulo").value.trim();
   const autor = document.getElementById("autor").value.trim();
   const texto = document.getElementById("texto").value.trim();
-  const arquivo = elementos.admin.imagem.files[0];
+  const arquivo = campoImagem.files[0];
 
   if (!titulo || !autor || !texto) {
     alert("⚠️ Preencha todos os campos obrigatórios.");
     return;
   }
 
-  function publicar(imagemBase64) {
-    noticias.unshift({
-      id: Date.now(),
-      titulo,
-      autor,
-      texto,
-      imagem: imagemBase64,
-      data: new Date().toLocaleDateString("pt-BR")
-    });
-
-    salvarDados();
-    atualizarInterface();
-    e.target.reset();
-    elementos.admin.preview.innerHTML = "";
-    alert("✅ Notícia publicada com sucesso!");
-    window.location.hash = "noticias";
+  let imagemUrl = null;
+  if (arquivo) {
+    imagemUrl = await uploadImagem(arquivo);
+    if (!imagemUrl) {
+      alert("⚠️ Erro ao fazer upload da imagem.");
+      return;
+    }
   }
 
-  if (arquivo) {
-    const leitor = new FileReader();
-    leitor.onload = ev => publicar(ev.target.result);
-    leitor.readAsDataURL(arquivo);
+  const sucesso = await salvarNoticia(titulo, autor, texto, imagemUrl);
+
+  if (sucesso) {
+    alert("✅ Notícia publicada com sucesso!");
+    formNoticia.reset();
+    previewImagem.innerHTML = "";
+    carregarETodosDados();
+    window.location.hash = "noticias";
   } else {
-    publicar("");
+    alert("❌ Erro ao publicar notícia.");
   }
 });
 
-elementos.forms.evento.addEventListener("submit", e => {
+formEvento.addEventListener("submit", async e => {
   e.preventDefault();
 
-  if (!estaLogado()) {
-    alert("⚠️ Somente administradores podem adicionar eventos.");
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    alert("⚠️ Entre como administrador para criar eventos.");
     return;
   }
 
@@ -393,20 +500,18 @@ elementos.forms.evento.addEventListener("submit", e => {
     return;
   }
 
-  eventos.push({
-    id: Date.now(),
-    titulo,
-    data,
-    descricao
-  });
+  const sucesso = await salvarEvento(titulo, data, descricao);
 
-  salvarDados();
-  atualizarInterface();
-  e.target.reset();
-  alert("✅ Evento cadastrado com sucesso!");
+  if (sucesso) {
+    alert("✅ Evento cadastrado com sucesso!");
+    formEvento.reset();
+    carregarETodosDados();
+  } else {
+    alert("❌ Erro ao cadastrar evento.");
+  }
 });
 
-elementos.forms.comentario.addEventListener("submit", e => {
+formComentario.addEventListener("submit", async e => {
   e.preventDefault();
 
   const nome = document.getElementById("nome").value.trim();
@@ -417,22 +522,25 @@ elementos.forms.comentario.addEventListener("submit", e => {
     return;
   }
 
-  comentarios.unshift({
-    id: Date.now(),
-    nome,
-    texto,
-    data: new Date().toLocaleDateString("pt-BR")
-  });
+  const sucesso = await salvarComentario(nome, texto);
 
-  salvarDados();
-  atualizarInterface();
-  e.target.reset();
-  alert("💬 Comentário enviado com sucesso!");
+  if (sucesso) {
+    alert("💬 Comentário enviado com sucesso!");
+    formComentario.reset();
+    carregarETodosDados();
+  } else {
+    alert("❌ Erro ao enviar comentário.");
+  }
 });
 
-document.addEventListener("click", e => {
+// ============================================
+// EXCLUSÃO DE ITENS
+// ============================================
+document.addEventListener("click", async e => {
   if (!e.target.matches('[data-id]')) return;
-  if (!estaLogado()) {
+
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
     alert("⚠️ Somente administradores podem excluir.");
     return;
   }
@@ -441,24 +549,48 @@ document.addEventListener("click", e => {
   const tipo = e.target.dataset.tipo;
 
   if (confirm("🗑️ Tem certeza que deseja excluir?")) {
-    if (tipo === "noticia") noticias = noticias.filter(n => n.id !== id);
-    if (tipo === "comentario") comentarios = comentarios.filter(c => c.id !== id);
-    if (tipo === "evento") eventos = eventos.filter(ev => ev.id !== id);
-    
-    salvarDados();
-    atualizarInterface();
+    const tabelas = {
+      noticia: 'noticias',
+      comentario: 'comentarios',
+      evento: 'eventos'
+    };
+
+    const tabela = tabelas[tipo];
+    if (tabela) {
+      await excluirItem(tabela, id);
+      carregarETodosDados();
+    }
   }
 });
 
-window.addEventListener("scroll", () => {
-  elementos.btnVoltarTopo.classList.toggle("visivel", window.pageYOffset > 300);
+// ============================================
+// BOTÕES DE CANCELAR
+// ============================================
+[botaoCancelarNoticia, botaoCancelarComentario, botaoCancelarEvento].forEach(btn => {
+  btn?.addEventListener("click", function() {
+    const form = this.closest("form");
+    form?.reset();
+    if (this.id === "btnLimparNoticia") {
+      previewImagem.innerHTML = "";
+    }
+  });
 });
 
-elementos.btnVoltarTopo.addEventListener("click", () => {
+// ============================================
+// BOTÃO VOLTAR AO TOPO
+// ============================================
+window.addEventListener("scroll", () => {
+  botaoVoltarTopo.classList.toggle("visivel", window.pageYOffset > 300);
+});
+
+botaoVoltarTopo.addEventListener("click", () => {
   window.scrollTo({ top: 0, behavior: "smooth" });
 });
 
-elementos.menuLinks.forEach(link => {
+// ============================================
+// MENU LINKS
+// ============================================
+document.querySelectorAll(".menu-link").forEach(link => {
   link.addEventListener("click", e => {
     e.preventDefault();
     const alvo = document.querySelector(link.getAttribute("href"));
@@ -466,5 +598,29 @@ elementos.menuLinks.forEach(link => {
   });
 });
 
-// Inicialização
-atualizarInterface();
+// ============================================
+// CARREGAR TODOS OS DADOS
+// ============================================
+async function carregarETodosDados() {
+  atualizarEstatisticas();
+
+  const [noticias, comentarios, eventos] = await Promise.all([
+    carregarNoticias(),
+    carregarComentarios(),
+    carregarEventos()
+  ]);
+
+  renderizarNoticias(noticias);
+  renderizarComentarios(comentarios);
+  renderizarEventos(eventos);
+}
+
+// ============================================
+// INICIALIZAÇÃO
+// ============================================
+async function inicializar() {
+  await verificarLogin();
+  await carregarETodosDados();
+}
+
+inicializar();
