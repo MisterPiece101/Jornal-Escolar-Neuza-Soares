@@ -341,12 +341,13 @@ body {
   background: var(--cor-cinza-claro);
 }
 
-/* NOTÍCIAS */
-.grid-noticias {
+/* LISTAS */
+.lista-conteudo {
   display: grid;
   gap: 25px;
 }
 
+/* NOTÍCIAS */
 .card-noticia {
   background: linear-gradient(135deg, #fbfdff, #f0f7ff);
   border: 2px solid var(--cor-borda);
@@ -394,11 +395,6 @@ body {
 }
 
 /* EVENTOS */
-.lista-eventos {
-  display: grid;
-  gap: 20px;
-}
-
 .card-evento {
   background: linear-gradient(135deg, #fffaf0, #fff8e1);
   border-left: 5px solid var(--cor-secundaria);
@@ -718,12 +714,6 @@ body {
 }
 
 /* COMENTÁRIOS */
-.lista-comentarios {
-  display: grid;
-  gap: 18px;
-  margin-top: 25px;
-}
-
 .card-comentario {
   background: linear-gradient(135deg, #fbfdff, #f5f9ff);
   border: 2px solid var(--cor-borda);
