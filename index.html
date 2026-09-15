@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Jornal escolar da Escola Estadual Neuza Soares Teixeira - Notícias, eventos e informações da comunidade escolar">
-  <meta name="author" content="Escola Estadual Neuza Soares Teixeira">
-  <meta name="theme-color" content="#1769aa">
+  <meta name="description" content="Jornal da Escola Estadual Neuza Soares Teixeira - Rio Largo/AL. Ensino Médio Integral (1º, 2º e 3º ano) com Curso Técnico em Logística.">
   <title>Jornal da Escola Estadual Neuza Soares Teixeira</title>
   <link rel="stylesheet" href="style.css">
+  
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
@@ -17,7 +18,7 @@
         <span class="logo">📰</span>
         <div class="titulo-header">
           <h1>Jornal da Escola Estadual Neuza Soares Teixeira</h1>
-          <p class="subtitulo">Informação, cultura e criatividade da nossa comunidade escolar</p>
+          <p class="subtitulo">Ensino Médio Integral e Curso Técnico Integrado em Logística</p>
         </div>
       </div>
       
@@ -89,7 +90,7 @@
         </p>
       </div>
 
-      <div id="listaNoticias" class="grid-noticias"></div>
+      <div id="listaNoticias" class="lista-conteudo"></div>
 
       <div id="semNoticias" class="estado-vazio">
         <div class="icone-estado">📭</div>
@@ -108,33 +109,48 @@
 
       <div class="conteudo-escola">
         <p class="texto-destaque">
-          A <strong>Escola Estadual Neuza Soares Teixeira</strong> é uma instituição 
-          dedicada à <strong>educação de qualidade</strong>, ao <strong>respeito mútuo</strong>, 
-          à <strong>criatividade</strong> e ao <strong>desenvolvimento integral</strong> dos seus estudantes.
+          A <strong>Escola Estadual Neuza Soares Teixeira</strong> é um espaço
+          de aprendizado, sonhos e oportunidades. Oferecemos
+          <strong>Ensino Médio em Tempo Integral</strong> para estudantes do
+          <strong>1º, 2º e 3º ano</strong>.
         </p>
 
         <p>
-          Nosso jornal escolar foi criado para divulgar <strong>projetos</strong>, 
-          <strong>acontecimentos</strong>, <strong>ideias</strong> e 
-          <strong>atividades</strong> realizadas por alunos, professores e funcionários. 
-          Aqui, toda a comunidade escolar tem voz!
+          Além das disciplinas do Ensino Médio, nossa escola oferece o
+          <strong>Curso Técnico Integrado em Logística</strong>, preparando os
+          estudantes para compreender, planejar e organizar processos de
+          transporte, armazenamento, estoque, distribuição e gestão de recursos.
+        </p>
+
+        <p>
+          Acreditamos que a educação transforma realidades. Todos os dias,
+          alunos, professores, funcionários e famílias constroem juntos uma
+          escola criativa, acolhedora, responsável e cheia de possibilidades.
         </p>
 
         <div class="grid-destaques">
           <div class="card-destaque">
             <div class="icone-card">🎓</div>
-            <h3>Educação de Qualidade</h3>
-            <p>Compromisso com o aprendizado e desenvolvimento dos alunos</p>
+            <h3>Ensino Médio Integral</h3>
+            <p>
+              Formação completa para estudantes do 1º, 2º e 3º ano do Ensino Médio.
+            </p>
           </div>
+
           <div class="card-destaque">
-            <div class="icone-card">🤝</div>
-            <h3>Respeito Mútuo</h3>
-            <p>Ambiente acolhedor e inclusivo para todos</p>
+            <div class="icone-card">🚚</div>
+            <h3>Curso de Logística</h3>
+            <p>
+              Formação técnica integrada para preparar os estudantes para o futuro.
+            </p>
           </div>
+
           <div class="card-destaque">
             <div class="icone-card">💡</div>
-            <h3>Criatividade</h3>
-            <p>Estímulo à inovação e expressão artística</p>
+            <h3>Conhecimento e Futuro</h3>
+            <p>
+              Educação, criatividade e oportunidades para transformar vidas.
+            </p>
           </div>
         </div>
       </div>
@@ -151,7 +167,7 @@
         </p>
       </div>
 
-      <div id="listaEventos" class="lista-eventos"></div>
+      <div id="listaEventos" class="lista-conteudo"></div>
 
       <div id="semEventos" class="estado-vazio">
         <div class="icone-estado">📭</div>
@@ -440,7 +456,7 @@
         </div>
       </form>
 
-      <div id="listaComentarios" class="lista-comentarios"></div>
+      <div id="listaComentarios" class="lista-conteudo"></div>
 
       <div id="semComentarios" class="estado-vazio">
         <div class="icone-estado">💭</div>
@@ -458,7 +474,7 @@
     <div class="conteudo-rodape">
       <p>© 2026 Jornal da Escola Estadual Neuza Soares Teixeira</p>
       <p>Feito com 💙 pela comunidade escolar</p>
-      <p class="creditos">Desenvolvido para fins educacionais</p>
+      <p class="creditos">Ensino Médio Integral e Curso Técnico em Logística</p>
     </div>
   </footer>
 
