@@ -9,37 +9,37 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let usuarioAtual = null;
 
 // ============================================
-// NAVEGAÇÃO
+// NAVEGAÇÃO ENTRE PÁGINAS
 // ============================================
 function initNavigation() {
-  const navButtons = document.querySelectorAll('.nav-btn');
+  const navItems = document.querySelectorAll('.nav-item');
 
-  navButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const sectionId = btn.getAttribute('data-section');
-      goToSection(sectionId);
+  navItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const targetId = item.getAttribute('data-target');
+      goToPage(targetId);
 
-      navButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+      navItems.forEach(n => n.classList.remove('active'));
+      item.classList.add('active');
     });
   });
 }
 
-function goToSection(sectionId) {
-  document.querySelectorAll('.content-section').forEach(sec => {
+function goToPage(pageId) {
+  document.querySelectorAll('.page-section').forEach(sec => {
     sec.classList.remove('active');
   });
 
-  const target = document.getElementById(sectionId);
+  const target = document.getElementById(pageId);
   if (target) {
     target.classList.add('active');
   }
 
-  if (sectionId === 'noticias') carregarNoticias();
-  if (sectionId === 'eventos') carregarEventos();
-  if (sectionId === 'comentarios') carregarComentarios();
-  if (sectionId === 'publicar') atualizarTelaPublicar();
-  if (sectionId === 'login') atualizarTelaLogin();
+  if (pageId === 'noticias') carregarNoticias();
+  if (pageId === 'eventos') carregarEventos();
+  if (pageId === 'comentarios') carregarComentarios();
+  if (pageId === 'publicar') atualizarTelaPublicar();
+  if (pageId === 'login') atualizarTelaLogin();
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -48,22 +48,22 @@ function goToSection(sectionId) {
 // LOGIN / LOGOUT
 // ============================================
 function atualizarTelaLogin() {
-  const formContainer = document.getElementById('login-form-container');
-  const infoContainer = document.getElementById('user-info-container');
-  const userNameDisplay = document.getElementById('user-name-display');
+  const formBox = document.getElementById('login-form-box');
+  const userBox = document.getElementById('user-logged-box');
+  const nomeExibicao = document.getElementById('user-nome-exibicao');
 
   if (usuarioAtual) {
-    formContainer.style.display = 'none';
-    infoContainer.style.display = 'block';
-    userNameDisplay.textContent = usuarioAtual.nome;
+    formBox.style.display = 'none';
+    userBox.style.display = 'block';
+    nomeExibicao.textContent = usuarioAtual.nome;
   } else {
-    formContainer.style.display = 'block';
-    infoContainer.style.display = 'none';
+    formBox.style.display = 'block';
+    userBox.style.display = 'none';
   }
 }
 
-async function fazerLogin() {
-  const nomeInput = document.getElementById('login-usuario');
+async function realizarLogin() {
+  const nomeInput = document.getElementById('login-nome');
   const senhaInput = document.getElementById('login-senha');
   const msg = document.getElementById('msg-login');
 
@@ -71,7 +71,7 @@ async function fazerLogin() {
   const senha = senhaInput.value;
 
   msg.textContent = '';
-  msg.className = 'form-message';
+  msg.className = 'form-feedback';
 
   if (!nome || !senha) {
     msg.textContent = 'Digite nome e senha.';
@@ -106,26 +106,26 @@ async function fazerLogin() {
   }
 }
 
-function fazerLogout() {
+function realizarLogout() {
   supabase.auth.signOut();
   usuarioAtual = null;
   atualizarTelaLogin();
-  goToSection('inicio');
+  goToPage('inicio');
 }
 
 // ============================================
 // TELA DE PUBLICAR
 // ============================================
 function atualizarTelaPublicar() {
-  const aviso = document.getElementById('aviso-publicar');
-  const form = document.getElementById('form-publicar');
+  const aviso = document.getElementById('aviso-login-publicar');
+  const formContainer = document.getElementById('form-publicar-container');
 
   if (usuarioAtual) {
     aviso.style.display = 'none';
-    form.style.display = 'block';
+    formContainer.style.display = 'block';
   } else {
     aviso.style.display = 'block';
-    form.style.display = 'none';
+    formContainer.style.display = 'none';
   }
 }
 
@@ -134,7 +134,12 @@ function atualizarTelaPublicar() {
 // ============================================
 async function carregarNoticias() {
   const container = document.getElementById('lista-noticias');
-  container.innerHTML = '<div class="empty-state">Carregando notícias...</div>';
+  container.innerHTML = `
+    <div class="loading-state">
+      <span class="loading-spinner"></span>
+      <p>Carregando notícias...</p>
+    </div>
+  `;
 
   try {
     const { data, error } = await supabase
@@ -145,7 +150,11 @@ async function carregarNoticias() {
     if (error) throw error;
 
     if (!data || data.length === 0) {
-      container.innerHTML = '<div class="empty-state">Nenhuma notícia ainda.</div>';
+      container.innerHTML = `
+        <div class="empty-state">
+          <p>Nenhuma notícia ainda.</p>
+        </div>
+      `;
       return;
     }
 
@@ -167,7 +176,11 @@ async function carregarNoticias() {
       container.appendChild(card);
     });
   } catch (e) {
-    container.innerHTML = '<div class="empty-state">Erro ao carregar notícias.</div>';
+    container.innerHTML = `
+      <div class="empty-state">
+        <p>Erro ao carregar notícias.</p>
+      </div>
+    `;
     console.error(e);
   }
 }
@@ -177,7 +190,12 @@ async function carregarNoticias() {
 // ============================================
 async function carregarEventos() {
   const container = document.getElementById('lista-eventos');
-  container.innerHTML = '<div class="empty-state">Carregando eventos...</div>';
+  container.innerHTML = `
+    <div class="loading-state">
+      <span class="loading-spinner"></span>
+      <p>Carregando eventos...</p>
+    </div>
+  `;
 
   try {
     const { data, error } = await supabase
@@ -188,7 +206,11 @@ async function carregarEventos() {
     if (error) throw error;
 
     if (!data || data.length === 0) {
-      container.innerHTML = '<div class="empty-state">Nenhum evento ainda.</div>';
+      container.innerHTML = `
+        <div class="empty-state">
+          <p>Nenhum evento ainda.</p>
+        </div>
+      `;
       return;
     }
 
@@ -211,7 +233,11 @@ async function carregarEventos() {
       container.appendChild(card);
     });
   } catch (e) {
-    container.innerHTML = '<div class="empty-state">Erro ao carregar eventos.</div>';
+    container.innerHTML = `
+      <div class="empty-state">
+        <p>Erro ao carregar eventos.</p>
+      </div>
+    `;
     console.error(e);
   }
 }
@@ -221,7 +247,12 @@ async function carregarEventos() {
 // ============================================
 async function carregarComentarios() {
   const container = document.getElementById('lista-comentarios');
-  container.innerHTML = '<div class="empty-state">Carregando comentários...</div>';
+  container.innerHTML = `
+    <div class="loading-state">
+      <span class="loading-spinner"></span>
+      <p>Carregando comentários...</p>
+    </div>
+  `;
 
   try {
     const { data, error } = await supabase
@@ -232,7 +263,11 @@ async function carregarComentarios() {
     if (error) throw error;
 
     if (!data || data.length === 0) {
-      container.innerHTML = '<div class="empty-state">Nenhum comentário ainda.</div>';
+      container.innerHTML = `
+        <div class="empty-state">
+          <p>Nenhum comentário ainda.</p>
+        </div>
+      `;
       return;
     }
 
@@ -254,7 +289,11 @@ async function carregarComentarios() {
       container.appendChild(card);
     });
   } catch (e) {
-    container.innerHTML = '<div class="empty-state">Erro ao carregar comentários.</div>';
+    container.innerHTML = `
+      <div class="empty-state">
+        <p>Erro ao carregar comentários.</p>
+      </div>
+    `;
     console.error(e);
   }
 }
@@ -271,7 +310,7 @@ async function publicarNoticia() {
   const conteudo = conteudoInput.value.trim();
 
   msg.textContent = '';
-  msg.className = 'form-message';
+  msg.className = 'form-feedback';
 
   if (!usuarioAtual) {
     msg.textContent = 'Faça login para publicar.';
@@ -321,7 +360,7 @@ async function publicarEvento() {
   const conteudo = conteudoInput.value.trim();
 
   msg.textContent = '';
-  msg.className = 'form-message';
+  msg.className = 'form-feedback';
 
   if (!usuarioAtual) {
     msg.textContent = 'Faça login para publicar.';
@@ -373,5 +412,5 @@ function escapeHtml(text) {
 // ============================================
 window.addEventListener('DOMContentLoaded', () => {
   initNavigation();
-  goToSection('inicio');
+  goToPage('inicio');
 });
