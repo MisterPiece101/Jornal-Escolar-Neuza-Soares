@@ -1,233 +1,587 @@
+/* ============================================
+   VARIÁVEIS E RESET
+   ============================================ */
 :root {
   --primary: #1a73e8;
   --primary-dark: #1557b0;
-  --bg: #f3f5f9;
-  --card: #ffffff;
-  --text: #1f2937;
-  --muted: #6b7280;
+  --primary-light: #4285f4;
+  --secondary: #34a853;
+  --secondary-dark: #2d8f47;
   --danger: #dc2626;
-  --success: #16a34a;
-  --border: #e5e7eb;
-  --shadow: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
-  --radius: 12px;
+  --danger-dark: #b91c1c;
+  --warning: #f59e0b;
+  --info: #0ea5e9;
+
+  --bg-body: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-muted: #f1f5f9;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+
+  --border: #e2e8f0;
+  --border-dark: #cbd5e1;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
+  --shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+
+  --font-main: 'Inter', system-ui, -apple-system, Arial, sans-serif;
 }
 
 * {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: Inter, system-ui, -apple-system, Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--bg);
-  color: var(--text);
+  font-family: var(--font-main);
+  background: var(--bg-body);
+  color: var(--text-primary);
   line-height: 1.6;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-header {
+/* ============================================
+   CABEÇALHO
+   ============================================ */
+.site-header {
   background: linear-gradient(135deg, var(--primary), var(--primary-dark));
   color: white;
-  padding: 2rem 1rem 1.5rem;
+  padding: 2.5rem 1rem 2rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.header-content {
+  max-width: 1100px;
+  margin: 0 auto;
   text-align: center;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.logo-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.site-title {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: white;
+}
+
+.site-subtitle {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.9);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   NAVEGAÇÃO
+   ============================================ */
+.main-nav {
+  background: var(--bg-card);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.nav-btn {
+  background: transparent;
+  border: 2px solid transparent;
+  padding: 0.55rem 0.95rem;
+  border-radius: var(--radius);
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.nav-btn:hover {
+  background: var(--bg-muted);
+  color: var(--text-primary);
+}
+
+.nav-btn.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+/* ============================================
+   CONTAINER PRINCIPAL
+   ============================================ */
+.container {
+  max-width: 1100px;
+  margin: 1.5rem auto;
+  padding: 0 1rem 2rem;
+  flex: 1;
+  width: 100%;
+}
+
+/* ============================================
+   SEÇÕES DE CONTEÚDO
+   ============================================ */
+.content-section {
+  display: none;
+  animation: fadeIn 0.25s ease;
+}
+
+.content-section.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-header {
+  margin-bottom: 1.25rem;
+}
+
+.section-header h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.section-desc {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+}
+
+/* ============================================
+   CARDS GERAIS
+   ============================================ */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================
+   PÁGINA INICIAL
+   ============================================ */
+.welcome-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
   box-shadow: var(--shadow);
 }
 
-header h1 {
-  font-size: 1.8rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+.welcome-card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
 }
 
-nav {
-  display: flex;
-  justify-content: center;
-  gap: 0.6rem;
-  padding: 0.8rem 1rem;
-  background: var(--card);
-  border-bottom: 1px solid var(--border);
-  flex-wrap: wrap;
-  position: sticky;
-  top: 0;
-  z-index: 10;
+.features-list {
+  list-style: none;
+  margin-bottom: 1rem;
 }
 
-nav button {
+.features-list li {
+  padding: 0.35rem 0;
+  font-size: 0.98rem;
+  color: var(--text-secondary);
+}
+
+.home-highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.highlight-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.highlight-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.highlight-card h4 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.highlight-card p {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+}
+
+/* ============================================
+   BOTÕES
+   ============================================ */
+.btn-primary,
+.btn-secondary,
+.btn-danger {
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.7rem 1.1rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  width: auto;
+  display: inline-block;
+}
+
+.btn-primary {
   background: var(--primary);
   color: white;
-  border: none;
-  padding: 0.55rem 0.9rem;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.92rem;
-  transition: transform 0.06s ease, background 0.15s ease;
 }
 
-nav button:hover {
+.btn-primary:hover {
   background: var(--primary-dark);
   transform: translateY(-1px);
 }
 
-main {
-  max-width: 900px;
-  margin: 1.5rem auto;
-  padding: 0 1rem 2rem;
-}
-
-.section {
-  display: none;
-  background: var(--card);
-  border-radius: var(--radius);
-  padding: 1.2rem;
-  margin-bottom: 1.2rem;
-  box-shadow: var(--shadow);
+.btn-secondary {
+  background: var(--bg-muted);
+  color: var(--text-primary);
   border: 1px solid var(--border);
 }
 
-.section.active {
-  display: block;
+.btn-secondary:hover {
+  background: var(--border);
 }
 
-h2 {
-  margin-bottom: 0.7rem;
-  color: var(--primary);
-  font-size: 1.35rem;
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+
+.btn-danger:hover {
+  background: var(--danger-dark);
+}
+
+/* ============================================
+   CARDS DE NOTÍCIAS/EVENTOS/COMENTÁRIOS
+   ============================================ */
+.news-card,
+.event-card,
+.comment-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.news-card:hover,
+.event-card:hover,
+.comment-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+.news-card h4,
+.event-card h4 {
+  font-size: 1.08rem;
   font-weight: 700;
+  color: var(--primary-dark);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
 }
 
-h3 {
-  margin: 1.2rem 0 0.6rem;
-  font-size: 1.05rem;
-  color: var(--text);
+.comment-card h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.4rem;
 }
 
-p {
+.news-card p,
+.event-card p,
+.comment-card p {
+  font-size: 0.93rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  white-space: pre-wrap;
+}
+
+.meta-info {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.5rem;
+}
+
+/* ============================================
+   ESTADO VAZIO
+   ============================================ */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  background: var(--bg-card);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+
+/* ============================================
+   CARD DE INFO (PUBLICAR LOGOUT)
+   ============================================ */
+.info-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  margin-bottom: 1.5rem;
+}
+
+.info-card p {
+  font-size: 0.98rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+/* ============================================
+   FORMULÁRIO DE PUBLICAÇÃO
+   ============================================ */
+.publish-form {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.form-group {
   margin-bottom: 0.5rem;
 }
 
-input, textarea {
+.form-group h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.form-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 1.5rem 0;
+}
+
+input[type="text"],
+input[type="password"],
+textarea {
   width: 100%;
-  padding: 0.75rem 0.85rem;
-  margin: 0.35rem 0 0.7rem;
+  padding: 0.75rem 0.9rem;
+  margin: 0.4rem 0 0.8rem;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius);
   font-size: 0.95rem;
+  font-family: var(--font-main);
   background: #fafafa;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
-input:focus, textarea:focus {
+input[type="text"]:focus,
+input[type="password"]:focus,
+textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 3px rgba(26,115,232,0.15);
+  box-shadow: 0 0 0 3px rgba(26,115,232,0.12);
 }
 
 textarea {
   resize: vertical;
-  min-height: 90px;
+  min-height: 100px;
 }
 
-button.action {
-  background: var(--primary);
-  color: white;
-  border: none;
-  padding: 0.75rem 1rem;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 0.95rem;
-  width: 100%;
-  margin-top: 0.4rem;
-  transition: background 0.15s ease, transform 0.06s ease;
+.form-message {
+  margin-top: 0.9rem;
+  font-size: 0.92rem;
+  font-weight: 600;
 }
 
-button.action:hover {
-  background: var(--primary-dark);
-  transform: translateY(-1px);
-}
-
-.news-item, .event-item, .comment-item {
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 0.9rem 1rem;
-  margin: 0.7rem 0;
-  background: #fafafa;
-}
-
-.news-item strong, .event-item strong {
-  font-size: 1.05rem;
-  color: var(--primary-dark);
-}
-
-.meta {
-  font-size: 0.82rem;
-  color: var(--muted);
-  margin-top: 0.35rem;
-}
-
-.login-card {
-  max-width: 360px;
-  margin: 0.5rem auto 1rem;
-  padding: 1.1rem 1.2rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: #fafafa;
-}
-
-.user-info {
-  text-align: center;
-  margin: 1rem 0 0.5rem;
-  font-weight: 700;
-  color: var(--primary);
-  font-size: 1.05rem;
-}
-
-.logout-btn {
-  background: var(--danger);
-  color: white;
-  border: none;
-  padding: 0.7rem 1rem;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: 700;
-  width: 100%;
-  margin-top: 0.6rem;
-}
-
-.logout-btn:hover {
-  background: #b91c1c;
-}
-
-.error {
+.form-message.error {
   color: var(--danger);
-  margin-top: 0.6rem;
-  font-size: 0.9rem;
 }
 
-.success {
-  color: var(--success);
-  margin-top: 0.6rem;
-  font-size: 0.9rem;
+.form-message.success {
+  color: var(--secondary);
 }
 
-.empty {
+/* ============================================
+   LOGIN
+   ============================================ */
+.login-card {
+  max-width: 420px;
+  margin: 0 auto;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.login-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+
+.login-icon {
+  font-size: 1.6rem;
+}
+
+.login-header h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* ============================================
+   ÁREA DO USUÁRIO
+   ============================================ */
+.user-area {
+  max-width: 420px;
+  margin: 0 auto;
   text-align: center;
-  color: var(--muted);
-  padding: 1.2rem 0.5rem;
 }
 
-@media (max-width: 600px) {
-  header h1 {
-    font-size: 1.5rem;
+.user-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.user-avatar {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+.user-details {
+  text-align: left;
+}
+
+.user-greeting {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.15rem;
+}
+
+#user-name-display {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* ============================================
+   RODAPÉ
+   ============================================ */
+.site-footer {
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  padding: 1.25rem 1rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: auto;
+}
+
+/* ============================================
+   RESPONSIVO
+   ============================================ */
+@media (max-width: 768px) {
+  .site-title {
+    font-size: 1.6rem;
   }
 
-  nav button {
+  .logo-icon {
+    font-size: 2rem;
+  }
+
+  .section-header h2 {
+    font-size: 1.4rem;
+  }
+
+  .home-highlights {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-btn {
     font-size: 0.85rem;
     padding: 0.5rem 0.7rem;
   }
 
-  .section {
-    padding: 1rem;
+  .site-title {
+    font-size: 1.4rem;
+  }
+
+  .welcome-card,
+  .publish-form,
+  .login-card,
+  .user-card {
+    padding: 1.1rem;
   }
 }
