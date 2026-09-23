@@ -1,326 +1,205 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Jornal da Escola Estadual Neuza Soares Teixeira - Rio Largo/AL">
-  <title>Jornal da Escola Estadual Neuza Soares Teixeira</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jornal da Escola</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    body {
+      background: #f5f5f5;
+      color: #333;
+      line-height: 1.5;
+    }
+    header {
+      background: #1a73e8;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      padding: 0.5rem;
+      background: #1557b0;
+      flex-wrap: wrap;
+    }
+    nav button {
+      background: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #1557b0;
+    }
+    nav button:hover {
+      background: #e8e8e8;
+    }
+    main {
+      max-width: 800px;
+      margin: 1rem auto;
+      padding: 0 1rem;
+    }
+    .section {
+      display: none;
+      background: white;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .section.active {
+      display: block;
+    }
+    h2 {
+      margin-bottom: 0.5rem;
+      color: #1a73e8;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 0.7rem;
+      margin: 0.3rem 0;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    button {
+      background: #1a73e8;
+      color: white;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    button:hover {
+      background: #1557b0;
+    }
+    .news-item, .event-item, .comment-item {
+      border-bottom: 1px solid #eee;
+      padding: 0.7rem 0;
+    }
+    .news-item:last-child, .event-item:last-child, .comment-item:last-child {
+      border-bottom: none;
+    }
+    .meta {
+      font-size: 0.85rem;
+      color: #777;
+      margin-top: 0.3rem;
+    }
+    .login-form {
+      max-width: 300px;
+      margin: 1rem auto;
+    }
+    .user-info {
+      text-align: center;
+      margin: 1rem 0;
+      font-weight: bold;
+      color: #1a73e8;
+    }
+    .logout-btn {
+      background: #d9534f;
+      margin-top: 0.5rem;
+    }
+    .logout-btn:hover {
+      background: #c9302c;
+    }
+    .error {
+      color: #d9534f;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+    .success {
+      color: #5cb85c;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+  </style>
 </head>
-
 <body>
-  <header class="topo">
-    <div class="container-header">
-      <div class="logo-container">
-        <span class="logo">📰</span>
-        <div class="titulo-header">
-          <h1>Jornal da Escola Estadual Neuza Soares Teixeira</h1>
-          <p class="subtitulo">Ensino Médio Integral e Curso Técnico Integrado em Logística</p>
-        </div>
-      </div>
-      
-      <div class="estatisticas">
-        <div class="stat-card">
-          <span class="stat-icon">📰</span>
-          <div class="stat-info">
-            <strong id="totalNoticias">0</strong>
-            <span>notícias</span>
-          </div>
-        </div>
-        <div class="stat-card">
-          <span class="stat-icon">📅</span>
-          <div class="stat-info">
-            <strong id="totalEventos">0</strong>
-            <span>eventos</span>
-          </div>
-        </div>
-        <div class="stat-card">
-          <span class="stat-icon">💬</span>
-          <div class="stat-info">
-            <strong id="totalComentarios">0</strong>
-            <span>comentários</span>
-          </div>
-        </div>
-      </div>
-    </div>
+  <header>
+    <h1>📰 Jornal da Escola</h1>
   </header>
 
-  <nav class="menu">
-    <div class="container-menu">
-      <a href="#inicio" class="menu-link">🏠 Início</a>
-      <a href="#noticias" class="menu-link">🗞️ Notícias</a>
-      <a href="#escola" class="menu-link">🏫 Nossa Escola</a>
-      <a href="#eventos" class="menu-link">📅 Eventos</a>
-      <a href="#publicar" class="menu-link">🔐 Publicar</a>
-      <a href="#comentarios" class="menu-link">💬 Comentários</a>
-    </div>
+  <nav>
+    <button onclick="showSection('inicio')">Início</button>
+    <button onclick="showSection('noticias')">Notícias</button>
+    <button onclick="showSection('eventos')">Eventos</button>
+    <button onclick="showSection('comentarios')">Comentários</button>
+    <button onclick="showSection('publicar')">Publicar</button>
+    <button onclick="showSection('login')">Entrar</button>
   </nav>
 
-  <main class="container">
-    <section id="inicio" class="boas-vindas">
-      <div class="badge">JORNAL ESCOLAR</div>
-      <h2 class="titulo-boas-vindas">Bem-vindo ao nosso jornal!</h2>
-      <p class="texto-boas-vindas">
-        Aqui você encontra <strong>notícias</strong>, <strong>projetos</strong>, 
-        <strong>eventos</strong> e <strong>informações</strong> importantes da 
-        <strong>Escola Estadual Neuza Soares Teixeira</strong>.
-      </p>
-      <div class="botoes-acao">
-        <a class="botao botao-primario" href="#noticias">📰 Ler notícias</a>
-        <a class="botao botao-secundario" href="#eventos">📅 Ver eventos</a>
+  <main>
+    <!-- INÍCIO -->
+    <section id="inicio" class="section active">
+      <h2>Bem-vindo ao Jornal da Escola!</h2>
+      <p>Aqui você encontra notícias, eventos e pode comentar sobre tudo.</p>
+      <p>Use o menu acima para navegar.</p>
+    </section>
+
+    <!-- NOTÍCIAS -->
+    <section id="noticias" class="section">
+      <h2>📰 Notícias</h2>
+      <div id="lista-noticias">Carregando...</div>
+    </section>
+
+    <!-- EVENTOS -->
+    <section id="eventos" class="section">
+      <h2>📅 Eventos</h2>
+      <div id="lista-eventos">Carregando...</div>
+    </section>
+
+    <!-- COMENTÁRIOS -->
+    <section id="comentarios" class="section">
+      <h2>💬 Comentários</h2>
+      <div id="lista-comentarios">Carregando...</div>
+    </section>
+
+    <!-- PUBLICAR -->
+    <section id="publicar" class="section">
+      <h2>✏️ Publicar</h2>
+      <div id="aviso-publicar">
+        <p>Faça login para publicar notícias, eventos e comentários.</p>
+      </div>
+      <div id="form-publicar" style="display:none;">
+        <h3>Nova Notícia</h3>
+        <input type="text" id="titulo-noticia" placeholder="Título da notícia" />
+        <textarea id="conteudo-noticia" placeholder="Conteúdo da notícia" rows="4"></textarea>
+        <button onclick="publicarNoticia()">Publicar Notícia</button>
+
+        <h3 style="margin-top:1.5rem;">Novo Evento</h3>
+        <input type="text" id="titulo-evento" placeholder="Título do evento" />
+        <input type="text" id="data-evento" placeholder="Data (ex: 25/09/2026)" />
+        <textarea id="conteudo-evento" placeholder="Descrição do evento" rows="3"></textarea>
+        <button onclick="publicarEvento()">Publicar Evento</button>
+
+        <div id="msg-publicar"></div>
       </div>
     </section>
 
-    <section id="noticias" class="secao">
-      <div class="cabecalho-secao">
-        <div class="titulo-secao">
-          <span class="icone-secao">🗞️</span>
-          <h2>Últimas notícias</h2>
-        </div>
-        <p class="descricao-secao">Acompanhe as novidades da nossa escola.</p>
+    <!-- LOGIN -->
+    <section id="login" class="section">
+      <h2>🔐 Entrar</h2>
+      <div id="login-form-container" class="login-form">
+        <input type="text" id="login-usuario" placeholder="Seu nome (ex: Gustavo)" />
+        <input type="password" id="login-senha" placeholder="Sua senha" />
+        <button onclick="fazerLogin()">Entrar</button>
+        <div id="msg-login" class="error"></div>
       </div>
-
-      <div id="listaNoticias" class="lista-conteudo"></div>
-
-      <div id="semNoticias" class="estado-vazio">
-        <div class="icone-estado">📭</div>
-        <p>Ainda não há notícias cadastradas.</p>
-      </div>
-    </section>
-
-    <section id="escola" class="secao secao-escola">
-      <div class="cabecalho-secao">
-        <div class="titulo-secao">
-          <span class="icone-secao">🏫</span>
-          <h2>Sobre a nossa escola</h2>
-        </div>
-      </div>
-
-      <div class="conteudo-escola">
-        <p class="texto-destaque">
-          A <strong>Escola Estadual Neuza Soares Teixeira</strong> oferece
-          <strong>Ensino Médio em Tempo Integral</strong> para estudantes do
-          <strong>1º, 2º e 3º ano</strong> com <strong>Curso Técnico Integrado em Logística</strong>.
-        </p>
-
-        <p>
-          Acreditamos que a educação transforma realidades. Todos os dias,
-          alunos, professores e famílias constroem juntos uma escola
-          criativa, acolhedora e cheia de possibilidades.
-        </p>
-
-        <div class="grid-destaques">
-          <div class="card-destaque">
-            <div class="icone-card">🎓</div>
-            <h3>Ensino Médio Integral</h3>
-            <p>Formação completa para o 1º, 2º e 3º ano.</p>
-          </div>
-          <div class="card-destaque">
-            <div class="icone-card">🚚</div>
-            <h3>Curso de Logística</h3>
-            <p>Técnico integrado para o futuro profissional.</p>
-          </div>
-          <div class="card-destaque">
-            <div class="icone-card">💡</div>
-            <h3>Conhecimento</h3>
-            <p>Educação que transforma vidas.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="eventos" class="secao">
-      <div class="cabecalho-secao">
-        <div class="titulo-secao">
-          <span class="icone-secao">📅</span>
-          <h2>Próximos eventos</h2>
-        </div>
-        <p class="descricao-secao">Confira a programação de eventos da escola.</p>
-      </div>
-
-      <div id="listaEventos" class="lista-conteudo"></div>
-
-      <div id="semEventos" class="estado-vazio">
-        <div class="icone-estado">📭</div>
-        <p>Ainda não há eventos cadastrados.</p>
-      </div>
-
-      <div id="painelEventos" class="painel-administrativo oculto">
-        <div class="cabecalho-painel">
-          <h3>➕ Adicionar novo evento</h3>
-        </div>
-
-        <form id="formEvento" class="formulario">
-          <div class="grupo-input">
-            <label for="tituloEvento"><span class="obrigatorio">*</span> Nome do evento</label>
-            <input type="text" id="tituloEvento" placeholder="Exemplo: Feira de Ciências" required>
-          </div>
-
-          <div class="grupo-input">
-            <label for="dataEvento"><span class="obrigatorio">*</span> Data do evento</label>
-            <input type="text" id="dataEvento" placeholder="Exemplo: 30 de agosto de 2026" required>
-          </div>
-
-          <div class="grupo-input">
-            <label for="descricaoEvento"><span class="obrigatorio">*</span> Descrição</label>
-            <textarea id="descricaoEvento" placeholder="Descreva o evento..." required rows="4"></textarea>
-          </div>
-
-          <div class="acoes-form">
-            <button type="submit" class="botao botao-sucesso">✅ Cadastrar evento</button>
-            <button type="button" class="botao botao-cancelar" id="btnCancelarEvento">❌ Cancelar</button>
-          </div>
-        </form>
-      </div>
-    </section>
-
-    <section id="publicar" class="secao secao-admin">
-      <div class="cabecalho-secao">
-        <div class="titulo-secao">
-          <span class="icone-secao">🔐</span>
-          <h2>Área do administrador</h2>
-        </div>
-      </div>
-
-      <div class="alerta-info">
-        <div class="icone-alerta">⚠️</div>
-        <div class="texto-alerta">
-          <strong>Acesso restrito</strong>
-          <p>Somente usuários autorizados podem publicar.</p>
-        </div>
-      </div>
-
-      <div id="areaLogin" class="area-login">
-        <div class="card-login">
-          <h3 class="titulo-login">🔑 Autenticação</h3>
-          <p class="subtitulo-login">Digite suas credenciais</p>
-
-          <div class="grupo-input">
-            <label for="loginAdmin"><span class="obrigatorio">*</span> Login</label>
-            <input type="text" id="loginAdmin" placeholder="Digite seu login" required>
-          </div>
-
-          <div class="grupo-input">
-            <label for="senhaAdmin"><span class="obrigatorio">*</span> Senha</label>
-            <div class="input-senha">
-              <input type="password" id="senhaAdmin" placeholder="Digite sua senha" required>
-              <button type="button" class="btn-toggle-senha" id="btnMostrarSenha">👁️</button>
-            </div>
-          </div>
-
-          <button class="botao botao-primario btn-entrar" id="btnEntrar">🔓 Entrar</button>
-          <div id="msgLogin" class="mensagem-feedback"></div>
-
-          <div class="lista-usuarios">
-            <p><strong>Usuários:</strong></p>
-            <div class="tags-usuarios">
-              <span class="tag">Gustavo</span>
-              <span class="tag">Lara</span>
-              <span class="tag">Sergio</span>
-              <span class="tag">Isabel</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div id="painelAdmin" class="painel-administrativo oculto">
-        <div class="cabecalho-painel">
-          <h3>👤 Usuário: <span id="usuarioConectado" class="badge-usuario"></span></h3>
-        </div>
-
-        <form id="formNoticia" class="formulario">
-          <div class="cabecalho-form">
-            <h4>📰 Publicar notícia</h4>
-          </div>
-
-          <div class="grupo-input">
-            <label for="titulo"><span class="obrigatorio">*</span> Título</label>
-            <input type="text" id="titulo" placeholder="Título da notícia" required>
-          </div>
-
-          <div class="grupo-input">
-            <label for="autor"><span class="obrigatorio">*</span> Autor</label>
-            <input type="text" id="autor" placeholder="Autor ou turma" required>
-          </div>
-
-          <div class="grupo-input">
-            <label for="texto"><span class="obrigatorio">*</span> Texto</label>
-            <textarea id="texto" placeholder="Conteúdo da notícia..." required rows="6"></textarea>
-          </div>
-
-          <div class="grupo-input">
-            <label for="imagem">📷 Imagem (opcional)</label>
-            <input type="file" id="imagem" accept="image/png, image/jpeg, image/webp">
-          </div>
-
-          <div id="previewImagem" class="preview-area"></div>
-
-          <div class="acoes-form">
-            <button type="submit" class="botao botao-sucesso">✅ Publicar</button>
-            <button type="button" class="botao botao-cancelar" id="btnLimparNoticia">🧹 Limpar</button>
-          </div>
-        </form>
-
-        <button class="botao botao-perigo" id="btnSair">🚪 Sair</button>
-      </div>
-    </section>
-
-    <section id="comentarios" class="secao">
-      <div class="cabecalho-secao">
-        <div class="titulo-secao">
-          <span class="icone-secao">💬</span>
-          <h2>Comentários</h2>
-        </div>
-      </div>
-
-      <div class="alerta-info">
-        <div class="icone-alerta">📢</div>
-        <div class="texto-alerta">
-          <strong>Regras</strong>
-          <p>Mantenha o respeito em todos os comentários!</p>
-        </div>
-      </div>
-
-      <form id="formComentario" class="formulario">
-        <div class="cabecalho-form">
-          <h4>✍️ Deixe seu comentário</h4>
-        </div>
-
-        <div class="grupo-input">
-          <label for="nome"><span class="obrigatorio">*</span> Nome</label>
-          <input type="text" id="nome" placeholder="Seu nome" required>
-        </div>
-
-        <div class="grupo-input">
-          <label for="comentario"><span class="obrigatorio">*</span> Comentário</label>
-          <textarea id="comentario" placeholder="Escreva seu comentário..." required rows="4"></textarea>
-        </div>
-
-        <div class="acoes-form">
-          <button type="submit" class="botao botao-primario">💬 Enviar</button>
-          <button type="button" class="botao botao-cancelar" id="btnLimparComentario">🧹 Limpar</button>
-        </div>
-      </form>
-
-      <div id="listaComentarios" class="lista-conteudo"></div>
-
-      <div id="semComentarios" class="estado-vazio">
-        <div class="icone-estado">💭</div>
-        <p>Ainda não há comentários.</p>
+      <div id="user-info-container" style="display:none;">
+        <div class="user-info" id="user-info"></div>
+        <button class="logout-btn" onclick="fazerLogout()">Sair</button>
       </div>
     </section>
   </main>
 
-  <button class="btn-voltar-topo" id="btnVoltarTopo" title="Voltar ao topo">⬆️</button>
-
-  <footer class="rodape">
-    <div class="conteudo-rodape">
-      <p>© 2026 Jornal da Escola Estadual Neuza Soares Teixeira</p>
-      <p>Feito com 💙 pela comunidade escolar</p>
-    </div>
-  </footer>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="script.js"></script>
 </body>
 </html>
