@@ -97,7 +97,7 @@ function atualizarTelaPublicar() {
 // CARREGAR NOTÍCIAS
 async function carregarNoticias() {
   const container = document.getElementById('lista-noticias');
-  container.textContent = 'Carregando...';
+  container.innerHTML = '<div class="empty">Carregando notícias...</div>';
 
   try {
     const { data, error } = await supabase
@@ -108,7 +108,7 @@ async function carregarNoticias() {
     if (error) throw error;
 
     if (!data || data.length === 0) {
-      container.textContent = 'Nenhuma notícia ainda.';
+      container.innerHTML = '<div class="empty">Nenhuma notícia ainda.</div>';
       return;
     }
 
@@ -125,7 +125,7 @@ async function carregarNoticias() {
       container.appendChild(div);
     });
   } catch (e) {
-    container.textContent = 'Erro ao carregar notícias.';
+    container.innerHTML = '<div class="empty">Erro ao carregar notícias.</div>';
     console.error(e);
   }
 }
@@ -133,7 +133,7 @@ async function carregarNoticias() {
 // CARREGAR EVENTOS
 async function carregarEventos() {
   const container = document.getElementById('lista-eventos');
-  container.textContent = 'Carregando...';
+  container.innerHTML = '<div class="empty">Carregando eventos...</div>';
 
   try {
     const { data, error } = await supabase
@@ -144,7 +144,7 @@ async function carregarEventos() {
     if (error) throw error;
 
     if (!data || data.length === 0) {
-      container.textContent = 'Nenhum evento ainda.';
+      container.innerHTML = '<div class="empty">Nenhum evento ainda.</div>';
       return;
     }
 
@@ -162,7 +162,7 @@ async function carregarEventos() {
       container.appendChild(div);
     });
   } catch (e) {
-    container.textContent = 'Erro ao carregar eventos.';
+    container.innerHTML = '<div class="empty">Erro ao carregar eventos.</div>';
     console.error(e);
   }
 }
@@ -170,7 +170,7 @@ async function carregarEventos() {
 // CARREGAR COMENTÁRIOS
 async function carregarComentarios() {
   const container = document.getElementById('lista-comentarios');
-  container.textContent = 'Carregando...';
+  container.innerHTML = '<div class="empty">Carregando comentários...</div>';
 
   try {
     const { data, error } = await supabase
@@ -181,7 +181,7 @@ async function carregarComentarios() {
     if (error) throw error;
 
     if (!data || data.length === 0) {
-      container.textContent = 'Nenhum comentário ainda.';
+      container.innerHTML = '<div class="empty">Nenhum comentário ainda.</div>';
       return;
     }
 
@@ -198,7 +198,7 @@ async function carregarComentarios() {
       container.appendChild(div);
     });
   } catch (e) {
-    container.textContent = 'Erro ao carregar comentários.';
+    container.innerHTML = '<div class="empty">Erro ao carregar comentários.</div>';
     console.error(e);
   }
 }
