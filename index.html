@@ -5,119 +5,235 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jornal da Escola</title>
   <style>
+    :root {
+      --primary: #1a73e8;
+      --primary-dark: #1557b0;
+      --bg: #f3f5f9;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --danger: #dc2626;
+      --success: #16a34a;
+      --border: #e5e7eb;
+      --shadow: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -2px rgba(0,0,0,0.04);
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: Arial, sans-serif;
+      font-family: Inter, system-ui, -apple-system, Arial, sans-serif;
     }
+
     body {
-      background: #f5f5f5;
-      color: #333;
-      line-height: 1.5;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
     }
+
     header {
-      background: #1a73e8;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
       color: white;
-      padding: 1rem;
+      padding: 2rem 1rem 1.5rem;
       text-align: center;
+      box-shadow: var(--shadow);
     }
+
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
     nav {
       display: flex;
       justify-content: center;
-      gap: 1rem;
-      padding: 0.5rem;
-      background: #1557b0;
-      flex-wrap: wrap;
-    }
-    nav button {
+      gap: 0.6rem;
+      padding: 0.8rem 1rem;
       background: white;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav button {
+      background: var(--primary);
+      color: white;
       border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 4px;
+      padding: 0.55rem 0.9rem;
+      border-radius: 8px;
       cursor: pointer;
-      font-weight: bold;
-      color: #1557b0;
+      font-weight: 600;
+      font-size: 0.92rem;
+      transition: transform 0.06s ease, background 0.15s ease;
     }
+
     nav button:hover {
-      background: #e8e8e8;
+      background: var(--primary-dark);
+      transform: translateY(-1px);
     }
+
     main {
-      max-width: 800px;
-      margin: 1rem auto;
-      padding: 0 1rem;
+      max-width: 900px;
+      margin: 1.5rem auto;
+      padding: 0 1rem 2rem;
     }
+
     .section {
       display: none;
-      background: white;
-      border-radius: 8px;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      background: var(--card);
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin-bottom: 1.2rem;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
     }
+
     .section.active {
       display: block;
     }
+
     h2 {
+      margin-bottom: 0.7rem;
+      color: var(--primary);
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    h3 {
+      margin: 1.2rem 0 0.6rem;
+      font-size: 1.05rem;
+      color: var(--text);
+    }
+
+    p {
       margin-bottom: 0.5rem;
-      color: #1a73e8;
     }
-    input, textarea, button {
+
+    input, textarea {
       width: 100%;
-      padding: 0.7rem;
-      margin: 0.3rem 0;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      font-size: 1rem;
+      padding: 0.75rem 0.85rem;
+      margin: 0.35rem 0 0.7rem;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 0.95rem;
+      background: #fafafa;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
-    button {
-      background: #1a73e8;
+
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(26,115,232,0.15);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    button.action {
+      background: var(--primary);
       color: white;
       border: none;
+      padding: 0.75rem 1rem;
+      border-radius: 10px;
       cursor: pointer;
-      font-weight: bold;
+      font-weight: 700;
+      font-size: 0.95rem;
+      width: 100%;
+      margin-top: 0.4rem;
+      transition: background 0.15s ease, transform 0.06s ease;
     }
-    button:hover {
-      background: #1557b0;
+
+    button.action:hover {
+      background: var(--primary-dark);
+      transform: translateY(-1px);
     }
+
     .news-item, .event-item, .comment-item {
-      border-bottom: 1px solid #eee;
-      padding: 0.7rem 0;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0.9rem 1rem;
+      margin: 0.7rem 0;
+      background: #fafafa;
     }
-    .news-item:last-child, .event-item:last-child, .comment-item:last-child {
-      border-bottom: none;
+
+    .news-item strong, .event-item strong {
+      font-size: 1.05rem;
+      color: var(--primary-dark);
     }
+
     .meta {
-      font-size: 0.85rem;
-      color: #777;
-      margin-top: 0.3rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.35rem;
     }
-    .login-form {
-      max-width: 300px;
-      margin: 1rem auto;
+
+    .login-card {
+      max-width: 360px;
+      margin: 0.5rem auto 1rem;
+      padding: 1.1rem 1.2rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fafafa;
     }
+
     .user-info {
       text-align: center;
-      margin: 1rem 0;
-      font-weight: bold;
-      color: #1a73e8;
+      margin: 1rem 0 0.5rem;
+      font-weight: 700;
+      color: var(--primary);
+      font-size: 1.05rem;
     }
+
     .logout-btn {
-      background: #d9534f;
-      margin-top: 0.5rem;
+      background: var(--danger);
+      color: white;
+      border: none;
+      padding: 0.7rem 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      width: 100%;
+      margin-top: 0.6rem;
     }
+
     .logout-btn:hover {
-      background: #c9302c;
+      background: #b91c1c;
     }
+
     .error {
-      color: #d9534f;
-      margin-top: 0.5rem;
+      color: var(--danger);
+      margin-top: 0.6rem;
       font-size: 0.9rem;
     }
+
     .success {
-      color: #5cb85c;
-      margin-top: 0.5rem;
+      color: var(--success);
+      margin-top: 0.6rem;
       font-size: 0.9rem;
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 1.2rem 0.5rem;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+      nav button {
+        font-size: 0.85rem;
+        padding: 0.5rem 0.7rem;
+      }
+      .section {
+        padding: 1rem;
+      }
     }
   </style>
 </head>
@@ -146,38 +262,46 @@
     <!-- NOTÍCIAS -->
     <section id="noticias" class="section">
       <h2>📰 Notícias</h2>
-      <div id="lista-noticias">Carregando...</div>
+      <div id="lista-noticias">
+        <div class="empty">Carregando notícias...</div>
+      </div>
     </section>
 
     <!-- EVENTOS -->
     <section id="eventos" class="section">
       <h2>📅 Eventos</h2>
-      <div id="lista-eventos">Carregando...</div>
+      <div id="lista-eventos">
+        <div class="empty">Carregando eventos...</div>
+      </div>
     </section>
 
     <!-- COMENTÁRIOS -->
     <section id="comentarios" class="section">
       <h2>💬 Comentários</h2>
-      <div id="lista-comentarios">Carregando...</div>
+      <div id="lista-comentarios">
+        <div class="empty">Carregando comentários...</div>
+      </div>
     </section>
 
     <!-- PUBLICAR -->
     <section id="publicar" class="section">
       <h2>✏️ Publicar</h2>
+
       <div id="aviso-publicar">
         <p>Faça login para publicar notícias, eventos e comentários.</p>
       </div>
+
       <div id="form-publicar" style="display:none;">
         <h3>Nova Notícia</h3>
         <input type="text" id="titulo-noticia" placeholder="Título da notícia" />
         <textarea id="conteudo-noticia" placeholder="Conteúdo da notícia" rows="4"></textarea>
-        <button onclick="publicarNoticia()">Publicar Notícia</button>
+        <button class="action" onclick="publicarNoticia()">Publicar Notícia</button>
 
-        <h3 style="margin-top:1.5rem;">Novo Evento</h3>
+        <h3>Novo Evento</h3>
         <input type="text" id="titulo-evento" placeholder="Título do evento" />
         <input type="text" id="data-evento" placeholder="Data (ex: 25/09/2026)" />
         <textarea id="conteudo-evento" placeholder="Descrição do evento" rows="3"></textarea>
-        <button onclick="publicarEvento()">Publicar Evento</button>
+        <button class="action" onclick="publicarEvento()">Publicar Evento</button>
 
         <div id="msg-publicar"></div>
       </div>
@@ -186,12 +310,14 @@
     <!-- LOGIN -->
     <section id="login" class="section">
       <h2>🔐 Entrar</h2>
-      <div id="login-form-container" class="login-form">
+
+      <div id="login-form-container" class="login-card">
         <input type="text" id="login-usuario" placeholder="Seu nome (ex: Gustavo)" />
         <input type="password" id="login-senha" placeholder="Sua senha" />
-        <button onclick="fazerLogin()">Entrar</button>
+        <button class="action" onclick="fazerLogin()">Entrar</button>
         <div id="msg-login" class="error"></div>
       </div>
+
       <div id="user-info-container" style="display:none;">
         <div class="user-info" id="user-info"></div>
         <button class="logout-btn" onclick="fazerLogout()">Sair</button>
@@ -199,7 +325,306 @@
     </section>
   </main>
 
+  <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="script.js"></script>
+
+  <script>
+    // CONFIGURAÇÃO DO SUPABASE
+    const SUPABASE_URL = 'https://whfyyenctppnociyfhfn.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_OxuXce2Y68ZzFkO8G5Opwg_H-AmYXDw';
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let usuarioAtual = null;
+
+    // NAVEGAÇÃO ENTRE SEÇÕES
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+
+      if (id === 'noticias') carregarNoticias();
+      if (id === 'eventos') carregarEventos();
+      if (id === 'comentarios') carregarComentarios();
+      if (id === 'publicar') atualizarTelaPublicar();
+      if (id === 'login') atualizarTelaLogin();
+    }
+
+    // LOGIN / LOGOUT
+    function atualizarTelaLogin() {
+      const formContainer = document.getElementById('login-form-container');
+      const infoContainer = document.getElementById('user-info-container');
+      const userInfo = document.getElementById('user-info');
+
+      if (usuarioAtual) {
+        formContainer.style.display = 'none';
+        infoContainer.style.display = 'block';
+        userInfo.textContent = `Olá, ${usuarioAtual.nome}!`;
+      } else {
+        formContainer.style.display = 'block';
+        infoContainer.style.display = 'none';
+      }
+    }
+
+    async function fazerLogin() {
+      const nome = document.getElementById('login-usuario').value.trim();
+      const senha = document.getElementById('login-senha').value;
+      const msg = document.getElementById('msg-login');
+
+      msg.textContent = '';
+
+      if (!nome || !senha) {
+        msg.textContent = 'Digite nome e senha.';
+        return;
+      }
+
+      const email = nome.toLowerCase() + '@escola.com.br';
+
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email,
+          password: senha
+        });
+
+        if (error) throw error;
+
+        usuarioAtual = {
+          id: data.user.id,
+          nome: nome.charAt(0).toUpperCase() + nome.slice(1).toLowerCase()
+        };
+
+        msg.className = 'success';
+        msg.textContent = 'Login realizado!';
+        atualizarTelaLogin();
+      } catch (e) {
+        msg.className = 'error';
+        msg.textContent = 'Login falhou. Verifique nome e senha.';
+        console.error(e);
+      }
+    }
+
+    function fazerLogout() {
+      supabase.auth.signOut();
+      usuarioAtual = null;
+      document.getElementById('login-usuario').value = '';
+      document.getElementById('login-senha').value = '';
+      document.getElementById('msg-login').textContent = '';
+      atualizarTelaLogin();
+    }
+
+    // TELA DE PUBLICAR
+    function atualizarTelaPublicar() {
+      const aviso = document.getElementById('aviso-publicar');
+      const form = document.getElementById('form-publicar');
+
+      if (usuarioAtual) {
+        aviso.style.display = 'none';
+        form.style.display = 'block';
+      } else {
+        aviso.style.display = 'block';
+        form.style.display = 'none';
+      }
+    }
+
+    // CARREGAR NOTÍCIAS
+    async function carregarNoticias() {
+      const container = document.getElementById('lista-noticias');
+      container.innerHTML = '<div class="empty">Carregando notícias...</div>';
+
+      try {
+        const { data, error } = await supabase
+          .from('noticias')
+          .select('*')
+          .order('criado_em', { ascending: false });
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+          container.innerHTML = '<div class="empty">Nenhuma notícia ainda.</div>';
+          return;
+        }
+
+        container.innerHTML = '';
+        data.forEach(n => {
+          const div = document.createElement('div');
+          div.className = 'news-item';
+          const dataFormatada = n.criado_em ? new Date(n.criado_em).toLocaleDateString('pt-BR') : '';
+          div.innerHTML = `
+            <strong>${n.titulo || 'Sem título'}</strong>
+            <p>${n.conteudo || ''}</p>
+            <div class="meta">Por ${n.autor || 'Anônimo'} em ${dataFormatada}</div>
+          `;
+          container.appendChild(div);
+        });
+      } catch (e) {
+        container.innerHTML = '<div class="empty">Erro ao carregar notícias.</div>';
+        console.error(e);
+      }
+    }
+
+    // CARREGAR EVENTOS
+    async function carregarEventos() {
+      const container = document.getElementById('lista-eventos');
+      container.innerHTML = '<div class="empty">Carregando eventos...</div>';
+
+      try {
+        const { data, error } = await supabase
+          .from('eventos')
+          .select('*')
+          .order('criado_em', { ascending: false });
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+          container.innerHTML = '<div class="empty">Nenhum evento ainda.</div>';
+          return;
+        }
+
+        container.innerHTML = '';
+        data.forEach(e => {
+          const div = document.createElement('div');
+          div.className = 'event-item';
+          const dataFormatada = e.criado_em ? new Date(e.criado_em).toLocaleDateString('pt-BR') : '';
+          div.innerHTML = `
+            <strong>${e.titulo || 'Sem título'}</strong>
+            <p>Data: ${e.data_evento || 'Sem data'}</p>
+            <p>${e.conteudo || ''}</p>
+            <div class="meta">Por ${e.autor || 'Anônimo'} em ${dataFormatada}</div>
+          `;
+          container.appendChild(div);
+        });
+      } catch (e) {
+        container.innerHTML = '<div class="empty">Erro ao carregar eventos.</div>';
+        console.error(e);
+      }
+    }
+
+    // CARREGAR COMENTÁRIOS
+    async function carregarComentarios() {
+      const container = document.getElementById('lista-comentarios');
+      container.innerHTML = '<div class="empty">Carregando comentários...</div>';
+
+      try {
+        const { data, error } = await supabase
+          .from('comentarios')
+          .select('*')
+          .order('criado_em', { ascending: false });
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+          container.innerHTML = '<div class="empty">Nenhum comentário ainda.</div>';
+          return;
+        }
+
+        container.innerHTML = '';
+        data.forEach(c => {
+          const div = document.createElement('div');
+          div.className = 'comment-item';
+          const dataFormatada = c.criado_em ? new Date(c.criado_em).toLocaleDateString('pt-BR') : '';
+          div.innerHTML = `
+            <strong>${c.autor || 'Anônimo'}</strong>
+            <p>${c.conteudo || ''}</p>
+            <div class="meta">Em ${dataFormatada}</div>
+          `;
+          container.appendChild(div);
+        });
+      } catch (e) {
+        container.innerHTML = '<div class="empty">Erro ao carregar comentários.</div>';
+        console.error(e);
+      }
+    }
+
+    // PUBLICAR NOTÍCIA
+    async function publicarNoticia() {
+      const titulo = document.getElementById('titulo-noticia').value.trim();
+      const conteudo = document.getElementById('conteudo-noticia').value.trim();
+      const msg = document.getElementById('msg-publicar');
+
+      msg.textContent = '';
+
+      if (!usuarioAtual) {
+        msg.className = 'error';
+        msg.textContent = 'Faça login para publicar.';
+        return;
+      }
+
+      if (!titulo || !conteudo) {
+        msg.className = 'error';
+        msg.textContent = 'Preencha título e conteúdo.';
+        return;
+      }
+
+      try {
+        const { error } = await supabase.from('noticias').insert([{
+          titulo,
+          conteudo,
+          autor: usuarioAtual.nome,
+          criado_por: usuarioAtual.id,
+          criado_em: new Date().toISOString()
+        }]);
+
+        if (error) throw error;
+
+        msg.className = 'success';
+        msg.textContent = 'Notícia publicada!';
+        document.getElementById('titulo-noticia').value = '';
+        document.getElementById('conteudo-noticia').value = '';
+      } catch (e) {
+        msg.className = 'error';
+        msg.textContent = 'Erro ao publicar notícia.';
+        console.error(e);
+      }
+    }
+
+    // PUBLICAR EVENTO
+    async function publicarEvento() {
+      const titulo = document.getElementById('titulo-evento').value.trim();
+      const dataEvento = document.getElementById('data-evento').value.trim();
+      const conteudo = document.getElementById('conteudo-evento').value.trim();
+      const msg = document.getElementById('msg-publicar');
+
+      msg.textContent = '';
+
+      if (!usuarioAtual) {
+        msg.className = 'error';
+        msg.textContent = 'Faça login para publicar.';
+        return;
+      }
+
+      if (!titulo || !conteudo) {
+        msg.className = 'error';
+        msg.textContent = 'Preencha título e descrição.';
+        return;
+      }
+
+      try {
+        const { error } = await supabase.from('eventos').insert([{
+          titulo,
+          data_evento: dataEvento,
+          conteudo,
+          autor: usuarioAtual.nome,
+          criado_por: usuarioAtual.id,
+          criado_em: new Date().toISOString()
+        }]);
+
+        if (error) throw error;
+
+        msg.className = 'success';
+        msg.textContent = 'Evento publicado!';
+        document.getElementById('titulo-evento').value = '';
+        document.getElementById('data-evento').value = '';
+        document.getElementById('conteudo-evento').value = '';
+      } catch (e) {
+        msg.className = 'error';
+        msg.textContent = 'Erro ao publicar evento.';
+        console.error(e);
+      }
+    }
+
+    // INICIALIZAÇÃO
+    window.addEventListener('DOMContentLoaded', () => {
+      showSection('inicio');
+    });
+  </script>
 </body>
 </html>
