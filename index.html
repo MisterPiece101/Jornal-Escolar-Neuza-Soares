@@ -7,93 +7,170 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>📰 Jornal da Escola</h1>
+  <!-- CABEÇALHO -->
+  <header class="site-header">
+    <div class="header-content">
+      <div class="logo-area">
+        <span class="logo-icon">📰</span>
+        <h1 class="site-title">Jornal da Escola</h1>
+      </div>
+      <p class="site-subtitle">Notícias, eventos e comentários da nossa comunidade</p>
+    </div>
   </header>
 
-  <nav>
-    <button onclick="showSection('inicio')">Início</button>
-    <button onclick="showSection('noticias')">Notícias</button>
-    <button onclick="showSection('eventos')">Eventos</button>
-    <button onclick="showSection('comentarios')">Comentários</button>
-    <button onclick="showSection('publicar')">Publicar</button>
-    <button onclick="showSection('login')">Entrar</button>
+  <!-- MENU -->
+  <nav class="main-nav">
+    <button class="nav-btn active" data-section="inicio">Início</button>
+    <button class="nav-btn" data-section="noticias">Notícias</button>
+    <button class="nav-btn" data-section="eventos">Eventos</button>
+    <button class="nav-btn" data-section="comentarios">Comentários</button>
+    <button class="nav-btn" data-section="publicar">Publicar</button>
+    <button class="nav-btn" data-section="login">Entrar</button>
   </nav>
 
-  <main>
+  <!-- CONTEÚDO -->
+  <main class="container">
     <!-- INÍCIO -->
-    <section id="inicio" class="section active">
-      <h2>Bem-vindo ao Jornal da Escola!</h2>
-      <p>Aqui você encontra notícias, eventos e pode comentar sobre tudo.</p>
-      <p>Use o menu acima para navegar.</p>
+    <section id="inicio" class="content-section active">
+      <div class="section-header">
+        <h2>Início</h2>
+        <p class="section-desc">Bem-vindo ao Jornal da Escola!</p>
+      </div>
+
+      <div class="welcome-card">
+        <h3>Aqui você encontra:</h3>
+        <ul class="features-list">
+          <li>📰 Últimas notícias da escola</li>
+          <li>📅 Eventos e atividades</li>
+          <li>💬 Espaço para comentários</li>
+          <li>✏️ Área para publicar seu conteúdo</li>
+        </ul>
+        <p>Use o menu acima para navegar entre as seções.</p>
+      </div>
+
+      <div class="home-highlights">
+        <div class="highlight-card">
+          <h4>📰 Notícias</h4>
+          <p>Fique por dentro das últimas novidades.</p>
+          <button class="btn-secondary" onclick="goToSection('noticias')">Ver notícias</button>
+        </div>
+        <div class="highlight-card">
+          <h4>📅 Eventos</h4>
+          <p>Confira a agenda de atividades da escola.</p>
+          <button class="btn-secondary" onclick="goToSection('eventos')">Ver eventos</button>
+        </div>
+        <div class="highlight-card">
+          <h4>✏️ Publicar</h4>
+          <p>Tem uma notícia? Faça login e publique!</p>
+          <button class="btn-secondary" onclick="goToSection('publicar')">Publicar</button>
+        </div>
+      </div>
     </section>
 
     <!-- NOTÍCIAS -->
-    <section id="noticias" class="section">
-      <h2>📰 Notícias</h2>
-      <div id="lista-noticias">
-        <div class="empty">Carregando notícias...</div>
+    <section id="noticias" class="content-section">
+      <div class="section-header">
+        <h2>Notícias</h2>
+        <p class="section-desc">Últimas notícias publicadas</p>
+      </div>
+      <div id="lista-noticias" class="cards-grid">
+        <div class="empty-state">Carregando notícias...</div>
       </div>
     </section>
 
     <!-- EVENTOS -->
-    <section id="eventos" class="section">
-      <h2>📅 Eventos</h2>
-      <div id="lista-eventos">
-        <div class="empty">Carregando eventos...</div>
+    <section id="eventos" class="content-section">
+      <div class="section-header">
+        <h2>Eventos</h2>
+        <p class="section-desc">Agenda de atividades e acontecimentos</p>
+      </div>
+      <div id="lista-eventos" class="cards-grid">
+        <div class="empty-state">Carregando eventos...</div>
       </div>
     </section>
 
     <!-- COMENTÁRIOS -->
-    <section id="comentarios" class="section">
-      <h2>💬 Comentários</h2>
-      <div id="lista-comentarios">
-        <div class="empty">Carregando comentários...</div>
+    <section id="comentarios" class="content-section">
+      <div class="section-header">
+        <h2>Comentários</h2>
+        <p class="section-desc">O que a galera tá falando</p>
+      </div>
+      <div id="lista-comentarios" class="cards-grid">
+        <div class="empty-state">Carregando comentários...</div>
       </div>
     </section>
 
     <!-- PUBLICAR -->
-    <section id="publicar" class="section">
-      <h2>✏️ Publicar</h2>
-
-      <div id="aviso-publicar">
-        <p>Faça login para publicar notícias, eventos e comentários.</p>
+    <section id="publicar" class="content-section">
+      <div class="section-header">
+        <h2>Publicar</h2>
+        <p class="section-desc">Crie notícias e eventos</p>
       </div>
 
-      <div id="form-publicar" style="display:none;">
-        <h3>Nova Notícia</h3>
-        <input type="text" id="titulo-noticia" placeholder="Título da notícia" />
-        <textarea id="conteudo-noticia" placeholder="Conteúdo da notícia" rows="4"></textarea>
-        <button class="action" onclick="publicarNoticia()">Publicar Notícia</button>
+      <div id="aviso-publicar" class="info-card">
+        <p>Faça login para publicar notícias, eventos e comentários.</p>
+        <button class="btn-primary" onclick="goToSection('login')">Ir para login</button>
+      </div>
 
-        <h3>Novo Evento</h3>
-        <input type="text" id="titulo-evento" placeholder="Título do evento" />
-        <input type="text" id="data-evento" placeholder="Data (ex: 25/09/2026)" />
-        <textarea id="conteudo-evento" placeholder="Descrição do evento" rows="3"></textarea>
-        <button class="action" onclick="publicarEvento()">Publicar Evento</button>
+      <div id="form-publicar" class="publish-form" style="display:none;">
+        <div class="form-group">
+          <h3>Nova Notícia</h3>
+          <input type="text" id="titulo-noticia" placeholder="Título da notícia" />
+          <textarea id="conteudo-noticia" placeholder="Conteúdo da notícia" rows="5"></textarea>
+          <button class="btn-primary" onclick="publicarNoticia()">Publicar Notícia</button>
+        </div>
 
-        <div id="msg-publicar"></div>
+        <div class="form-divider"></div>
+
+        <div class="form-group">
+          <h3>Novo Evento</h3>
+          <input type="text" id="titulo-evento" placeholder="Título do evento" />
+          <input type="text" id="data-evento" placeholder="Data (ex: 25/09/2026)" />
+          <textarea id="conteudo-evento" placeholder="Descrição do evento" rows="4"></textarea>
+          <button class="btn-primary" onclick="publicarEvento()">Publicar Evento</button>
+        </div>
+
+        <div id="msg-publicar" class="form-message"></div>
       </div>
     </section>
 
     <!-- LOGIN -->
-    <section id="login" class="section">
-      <h2>🔐 Entrar</h2>
-
-      <div id="login-form-container" class="login-card">
-        <input type="text" id="login-usuario" placeholder="Seu nome (ex: Gustavo)" />
-        <input type="password" id="login-senha" placeholder="Sua senha" />
-        <button class="action" onclick="fazerLogin()">Entrar</button>
-        <div id="msg-login" class="error"></div>
+    <section id="login" class="content-section">
+      <div class="section-header">
+        <h2>Entrar</h2>
+        <p class="section-desc">Acesse sua conta para publicar</p>
       </div>
 
-      <div id="user-info-container" style="display:none;">
-        <div class="user-info" id="user-info"></div>
-        <button class="logout-btn" onclick="fazerLogout()">Sair</button>
+      <div id="login-form-container" class="login-card">
+        <div class="login-header">
+          <span class="login-icon">🔐</span>
+          <h3>Login</h3>
+        </div>
+        <input type="text" id="login-usuario" placeholder="Seu nome (ex: Gustavo)" />
+        <input type="password" id="login-senha" placeholder="Sua senha" />
+        <button class="btn-primary" onclick="fazerLogin()">Entrar</button>
+        <div id="msg-login" class="form-message error"></div>
+      </div>
+
+      <div id="user-info-container" class="user-area" style="display:none;">
+        <div class="user-card">
+          <div class="user-avatar">👤</div>
+          <div class="user-details">
+            <p class="user-greeting">Olá,</p>
+            <h3 id="user-name-display">Usuário</h3>
+          </div>
+        </div>
+        <button class="btn-danger" onclick="fazerLogout()">Sair</button>
       </div>
     </section>
   </main>
 
+  <!-- RODAPÉ -->
+  <footer class="site-footer">
+    <p>© 2026 Jornal da Escola - Todos os direitos reservados</p>
+  </footer>
+
+  <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="script.js"></script>
 </body>
