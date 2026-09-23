@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Jornal da Escola Estadual Neuza Soares Teixeira - Rio Largo/AL. Ensino Médio Integral (1º, 2º e 3º ano) com Curso Técnico em Logística.">
+  <meta name="description" content="Jornal da Escola Estadual Neuza Soares Teixeira - Rio Largo/AL">
   <title>Jornal da Escola Estadual Neuza Soares Teixeira</title>
   <link rel="stylesheet" href="style.css">
-  
-  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
@@ -66,16 +64,11 @@
       <p class="texto-boas-vindas">
         Aqui você encontra <strong>notícias</strong>, <strong>projetos</strong>, 
         <strong>eventos</strong> e <strong>informações</strong> importantes da 
-        <strong>Escola Estadual Neuza Soares Teixeira</strong>. Fique por dentro 
-        de tudo que acontece na nossa escola!
+        <strong>Escola Estadual Neuza Soares Teixeira</strong>.
       </p>
       <div class="botoes-acao">
-        <a class="botao botao-primario" href="#noticias">
-          <span>📰</span> Ler notícias
-        </a>
-        <a class="botao botao-secundario" href="#eventos">
-          <span>📅</span> Ver eventos
-        </a>
+        <a class="botao botao-primario" href="#noticias">📰 Ler notícias</a>
+        <a class="botao botao-secundario" href="#eventos">📅 Ver eventos</a>
       </div>
     </section>
 
@@ -85,9 +78,7 @@
           <span class="icone-secao">🗞️</span>
           <h2>Últimas notícias</h2>
         </div>
-        <p class="descricao-secao">
-          Acompanhe as novidades da nossa escola. As notícias mais recentes aparecem primeiro.
-        </p>
+        <p class="descricao-secao">Acompanhe as novidades da nossa escola.</p>
       </div>
 
       <div id="listaNoticias" class="lista-conteudo"></div>
@@ -95,7 +86,6 @@
       <div id="semNoticias" class="estado-vazio">
         <div class="icone-estado">📭</div>
         <p>Ainda não há notícias cadastradas.</p>
-        <small>Seja o primeiro a publicar!</small>
       </div>
     </section>
 
@@ -109,48 +99,32 @@
 
       <div class="conteudo-escola">
         <p class="texto-destaque">
-          A <strong>Escola Estadual Neuza Soares Teixeira</strong> é um espaço
-          de aprendizado, sonhos e oportunidades. Oferecemos
+          A <strong>Escola Estadual Neuza Soares Teixeira</strong> oferece
           <strong>Ensino Médio em Tempo Integral</strong> para estudantes do
-          <strong>1º, 2º e 3º ano</strong>.
-        </p>
-
-        <p>
-          Além das disciplinas do Ensino Médio, nossa escola oferece o
-          <strong>Curso Técnico Integrado em Logística</strong>, preparando os
-          estudantes para compreender, planejar e organizar processos de
-          transporte, armazenamento, estoque, distribuição e gestão de recursos.
+          <strong>1º, 2º e 3º ano</strong> com <strong>Curso Técnico Integrado em Logística</strong>.
         </p>
 
         <p>
           Acreditamos que a educação transforma realidades. Todos os dias,
-          alunos, professores, funcionários e famílias constroem juntos uma
-          escola criativa, acolhedora, responsável e cheia de possibilidades.
+          alunos, professores e famílias constroem juntos uma escola
+          criativa, acolhedora e cheia de possibilidades.
         </p>
 
         <div class="grid-destaques">
           <div class="card-destaque">
             <div class="icone-card">🎓</div>
             <h3>Ensino Médio Integral</h3>
-            <p>
-              Formação completa para estudantes do 1º, 2º e 3º ano do Ensino Médio.
-            </p>
+            <p>Formação completa para o 1º, 2º e 3º ano.</p>
           </div>
-
           <div class="card-destaque">
             <div class="icone-card">🚚</div>
             <h3>Curso de Logística</h3>
-            <p>
-              Formação técnica integrada para preparar os estudantes para o futuro.
-            </p>
+            <p>Técnico integrado para o futuro profissional.</p>
           </div>
-
           <div class="card-destaque">
             <div class="icone-card">💡</div>
-            <h3>Conhecimento e Futuro</h3>
-            <p>
-              Educação, criatividade e oportunidades para transformar vidas.
-            </p>
+            <h3>Conhecimento</h3>
+            <p>Educação que transforma vidas.</p>
           </div>
         </div>
       </div>
@@ -162,9 +136,7 @@
           <span class="icone-secao">📅</span>
           <h2>Próximos eventos</h2>
         </div>
-        <p class="descricao-secao">
-          Confira a programação de eventos da escola. Participe e faça parte!
-        </p>
+        <p class="descricao-secao">Confira a programação de eventos da escola.</p>
       </div>
 
       <div id="listaEventos" class="lista-conteudo"></div>
@@ -172,68 +144,32 @@
       <div id="semEventos" class="estado-vazio">
         <div class="icone-estado">📭</div>
         <p>Ainda não há eventos cadastrados.</p>
-        <small>Em breve teremos novidades!</small>
       </div>
 
       <div id="painelEventos" class="painel-administrativo oculto">
         <div class="cabecalho-painel">
           <h3>➕ Adicionar novo evento</h3>
-          <p>Preencha os campos abaixo para cadastrar um evento no calendário escolar.</p>
         </div>
 
         <form id="formEvento" class="formulario">
           <div class="grupo-input">
-            <label for="tituloEvento">
-              <span class="obrigatorio">*</span> Nome do evento
-            </label>
-            <input
-              type="text"
-              id="tituloEvento"
-              placeholder="Exemplo: Feira de Ciências 2026"
-              required
-              minlength="3"
-              maxlength="100"
-            >
-            <span class="helper-text">Digite um nome claro e objetivo (3-100 caracteres)</span>
+            <label for="tituloEvento"><span class="obrigatorio">*</span> Nome do evento</label>
+            <input type="text" id="tituloEvento" placeholder="Exemplo: Feira de Ciências" required>
           </div>
 
           <div class="grupo-input">
-            <label for="dataEvento">
-              <span class="obrigatorio">*</span> Data do evento
-            </label>
-            <input
-              type="text"
-              id="dataEvento"
-              placeholder="Exemplo: 30 de agosto de 2026"
-              required
-              minlength="5"
-              maxlength="50"
-            >
-            <span class="helper-text">Informe a data completa do evento</span>
+            <label for="dataEvento"><span class="obrigatorio">*</span> Data do evento</label>
+            <input type="text" id="dataEvento" placeholder="Exemplo: 30 de agosto de 2026" required>
           </div>
 
           <div class="grupo-input">
-            <label for="descricaoEvento">
-              <span class="obrigatorio">*</span> Descrição detalhada
-            </label>
-            <textarea
-              id="descricaoEvento"
-              placeholder="Descreva o evento: objetivo, atividades, público-alvo..."
-              required
-              minlength="10"
-              maxlength="500"
-              rows="5"
-            ></textarea>
-            <span class="helper-text">Detalhe o evento para melhor compreensão (10-500 caracteres)</span>
+            <label for="descricaoEvento"><span class="obrigatorio">*</span> Descrição</label>
+            <textarea id="descricaoEvento" placeholder="Descreva o evento..." required rows="4"></textarea>
           </div>
 
           <div class="acoes-form">
-            <button type="submit" class="botao botao-sucesso">
-              <span>✅</span> Cadastrar evento
-            </button>
-            <button type="button" class="botao botao-cancelar" id="btnCancelarEvento">
-              <span>❌</span> Cancelar
-            </button>
+            <button type="submit" class="botao botao-sucesso">✅ Cadastrar evento</button>
+            <button type="button" class="botao botao-cancelar" id="btnCancelarEvento">❌ Cancelar</button>
           </div>
         </form>
       </div>
@@ -251,54 +187,33 @@
         <div class="icone-alerta">⚠️</div>
         <div class="texto-alerta">
           <strong>Acesso restrito</strong>
-          <p>Somente usuários autorizados podem publicar ou excluir conteúdos.</p>
+          <p>Somente usuários autorizados podem publicar.</p>
         </div>
       </div>
 
       <div id="areaLogin" class="area-login">
         <div class="card-login">
           <h3 class="titulo-login">🔑 Autenticação</h3>
-          <p class="subtitulo-login">Digite suas credenciais para acessar</p>
+          <p class="subtitulo-login">Digite suas credenciais</p>
 
           <div class="grupo-input">
-            <label for="loginAdmin">
-              <span class="obrigatorio">*</span> Login
-            </label>
-            <input
-              type="text"
-              id="loginAdmin"
-              placeholder="Digite seu login"
-              autocomplete="username"
-              required
-            >
+            <label for="loginAdmin"><span class="obrigatorio">*</span> Login</label>
+            <input type="text" id="loginAdmin" placeholder="Digite seu login" required>
           </div>
 
           <div class="grupo-input">
-            <label for="senhaAdmin">
-              <span class="obrigatorio">*</span> Senha
-            </label>
+            <label for="senhaAdmin"><span class="obrigatorio">*</span> Senha</label>
             <div class="input-senha">
-              <input
-                type="password"
-                id="senhaAdmin"
-                placeholder="Digite sua senha"
-                autocomplete="current-password"
-                required
-              >
-              <button type="button" class="btn-toggle-senha" id="btnMostrarSenha" title="Mostrar senha">
-                👁️
-              </button>
+              <input type="password" id="senhaAdmin" placeholder="Digite sua senha" required>
+              <button type="button" class="btn-toggle-senha" id="btnMostrarSenha">👁️</button>
             </div>
           </div>
 
-          <button class="botao botao-primario btn-entrar" id="btnEntrar">
-            <span>🔓</span> Entrar
-          </button>
-
+          <button class="botao botao-primario btn-entrar" id="btnEntrar">🔓 Entrar</button>
           <div id="msgLogin" class="mensagem-feedback"></div>
 
           <div class="lista-usuarios">
-            <p><strong>Usuários disponíveis:</strong></p>
+            <p><strong>Usuários:</strong></p>
             <div class="tags-usuarios">
               <span class="tag">Gustavo</span>
               <span class="tag">Lara</span>
@@ -312,85 +227,42 @@
       <div id="painelAdmin" class="painel-administrativo oculto">
         <div class="cabecalho-painel">
           <h3>👤 Usuário: <span id="usuarioConectado" class="badge-usuario"></span></h3>
-          <p>Agora você pode publicar notícias, adicionar eventos e gerenciar comentários.</p>
         </div>
 
         <form id="formNoticia" class="formulario">
           <div class="cabecalho-form">
-            <h4>📰 Publicar nova notícia</h4>
-            <p>Preencha os campos abaixo para criar uma notícia</p>
+            <h4>📰 Publicar notícia</h4>
           </div>
 
           <div class="grupo-input">
-            <label for="titulo">
-              <span class="obrigatorio">*</span> Título da notícia
-            </label>
-            <input
-              type="text"
-              id="titulo"
-              placeholder="Exemplo: Alunos participam da Feira de Ciências"
-              required
-              minlength="5"
-              maxlength="120"
-            >
-            <span class="helper-text">Crie um título atraente (5-120 caracteres)</span>
+            <label for="titulo"><span class="obrigatorio">*</span> Título</label>
+            <input type="text" id="titulo" placeholder="Título da notícia" required>
           </div>
 
           <div class="grupo-input">
-            <label for="autor">
-              <span class="obrigatorio">*</span> Autor ou turma
-            </label>
-            <input
-              type="text"
-              id="autor"
-              placeholder="Exemplo: Turma 2º A"
-              required
-              minlength="2"
-              maxlength="60"
-            >
-            <span class="helper-text">Informe quem está publicando</span>
+            <label for="autor"><span class="obrigatorio">*</span> Autor</label>
+            <input type="text" id="autor" placeholder="Autor ou turma" required>
           </div>
 
           <div class="grupo-input">
-            <label for="texto">
-              <span class="obrigatorio">*</span> Conteúdo da notícia
-            </label>
-            <textarea
-              id="texto"
-              placeholder="Escreva o conteúdo completo da notícia..."
-              required
-              minlength="20"
-              maxlength="2000"
-              rows="8"
-            ></textarea>
-            <span class="helper-text">Desenvolva bem a notícia (20-2000 caracteres)</span>
+            <label for="texto"><span class="obrigatorio">*</span> Texto</label>
+            <textarea id="texto" placeholder="Conteúdo da notícia..." required rows="6"></textarea>
           </div>
 
           <div class="grupo-input">
             <label for="imagem">📷 Imagem (opcional)</label>
-            <input
-              type="file"
-              id="imagem"
-              accept="image/png, image/jpeg, image/webp"
-            >
-            <span class="helper-text">Formatos: JPG, PNG ou WEBP. Máx: 2 MB</span>
+            <input type="file" id="imagem" accept="image/png, image/jpeg, image/webp">
           </div>
 
           <div id="previewImagem" class="preview-area"></div>
 
           <div class="acoes-form">
-            <button type="submit" class="botao botao-sucesso">
-              <span>✅</span> Publicar notícia
-            </button>
-            <button type="button" class="botao botao-cancelar" id="btnLimparNoticia">
-              <span>🧹</span> Limpar
-            </button>
+            <button type="submit" class="botao botao-sucesso">✅ Publicar</button>
+            <button type="button" class="botao botao-cancelar" id="btnLimparNoticia">🧹 Limpar</button>
           </div>
         </form>
 
-        <button class="botao botao-perigo" id="btnSair">
-          <span>🚪</span> Sair
-        </button>
+        <button class="botao botao-perigo" id="btnSair">🚪 Sair</button>
       </div>
     </section>
 
@@ -405,54 +277,29 @@
       <div class="alerta-info">
         <div class="icone-alerta">📢</div>
         <div class="texto-alerta">
-          <strong>Regras da comunidade</strong>
-          <p>Não publique dados pessoais, ofensas ou discriminação. Mantenha o respeito!</p>
+          <strong>Regras</strong>
+          <p>Mantenha o respeito em todos os comentários!</p>
         </div>
       </div>
 
       <form id="formComentario" class="formulario">
         <div class="cabecalho-form">
           <h4>✍️ Deixe seu comentário</h4>
-          <p>Sua opinião é importante para nós!</p>
         </div>
 
         <div class="grupo-input">
-          <label for="nome">
-            <span class="obrigatorio">*</span> Seu nome ou apelido
-          </label>
-          <input
-            type="text"
-            id="nome"
-            placeholder="Como quer ser identificado?"
-            required
-            minlength="2"
-            maxlength="50"
-          >
-          <span class="helper-text">Use seu nome ou apelido (2-50 caracteres)</span>
+          <label for="nome"><span class="obrigatorio">*</span> Nome</label>
+          <input type="text" id="nome" placeholder="Seu nome" required>
         </div>
 
         <div class="grupo-input">
-          <label for="comentario">
-            <span class="obrigatorio">*</span> Comentário
-          </label>
-          <textarea
-            id="comentario"
-            placeholder="Escreva seu comentário, sugestão ou opinião..."
-            required
-            minlength="5"
-            maxlength="500"
-            rows="5"
-          ></textarea>
-          <span class="helper-text">Seja respeitoso e construtivo (5-500 caracteres)</span>
+          <label for="comentario"><span class="obrigatorio">*</span> Comentário</label>
+          <textarea id="comentario" placeholder="Escreva seu comentário..." required rows="4"></textarea>
         </div>
 
         <div class="acoes-form">
-          <button type="submit" class="botao botao-primario">
-            <span>💬</span> Enviar comentário
-          </button>
-          <button type="button" class="botao botao-cancelar" id="btnLimparComentario">
-            <span>🧹</span> Limpar
-          </button>
+          <button type="submit" class="botao botao-primario">💬 Enviar</button>
+          <button type="button" class="botao botao-cancelar" id="btnLimparComentario">🧹 Limpar</button>
         </div>
       </form>
 
@@ -461,20 +308,16 @@
       <div id="semComentarios" class="estado-vazio">
         <div class="icone-estado">💭</div>
         <p>Ainda não há comentários.</p>
-        <small>Seja o primeiro a comentar!</small>
       </div>
     </section>
   </main>
 
-  <button class="btn-voltar-topo" id="btnVoltarTopo" title="Voltar ao topo">
-    <span>⬆️</span>
-  </button>
+  <button class="btn-voltar-topo" id="btnVoltarTopo" title="Voltar ao topo">⬆️</button>
 
   <footer class="rodape">
     <div class="conteudo-rodape">
       <p>© 2026 Jornal da Escola Estadual Neuza Soares Teixeira</p>
       <p>Feito com 💙 pela comunidade escolar</p>
-      <p class="creditos">Ensino Médio Integral e Curso Técnico em Logística</p>
     </div>
   </footer>
 
