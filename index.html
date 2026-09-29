@@ -4,565 +4,282 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jornal da Escola</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      color: #222;
-      line-height: 1.5;
-    }
-    header {
-      background: #1a73e8;
-      color: white;
-      padding: 1.5rem 1rem;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 1.8rem;
-    }
-    header p {
-      margin: 0.3rem 0 0;
-      font-size: 0.95rem;
-      opacity: 0.9;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.6rem 1rem;
-      background: white;
-      border-bottom: 1px solid #ddd;
-      flex-wrap: wrap;
-    }
-    nav button {
-      padding: 0.5rem 0.9rem;
-      border: none;
-      border-radius: 8px;
-      background: #1a73e8;
-      color: white;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    nav button:hover {
-      background: #1557b0;
-    }
-    main {
-      max-width: 900px;
-      margin: 1.5rem auto;
-      padding: 0 1rem 2rem;
-    }
-    .secao {
-      display: none;
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 1.2rem;
-      margin-bottom: 1.2rem;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.06);
-    }
-    .secao.ativa {
-      display: block;
-    }
-    h2 {
-      color: #1a73e8;
-      margin-top: 0;
-    }
-    input, textarea, button {
-      width: 100%;
-      padding: 0.7rem;
-      margin: 0.4rem 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 0.95rem;
-      font-family: inherit;
-    }
-    button {
-      background: #1a73e8;
-      color: white;
-      border: none;
-      font-weight: 700;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #1557b0;
-    }
-    .card {
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 0.9rem;
-      margin-bottom: 0.7rem;
-      background: #fafafa;
-    }
-    .card strong {
-      color: #1557b0;
-    }
-    .meta {
-      font-size: 0.8rem;
-      color: #777;
-      margin-top: 0.3rem;
-    }
-    .msg {
-      margin-top: 0.7rem;
-      font-weight: 700;
-    }
-    .msg.erro {
-      color: #dc2626;
-    }
-    .msg.sucesso {
-      color: #16a34a;
-    }
-    .login-box {
-      max-width: 320px;
-      margin: 1rem auto;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      padding: 1.2rem;
-      background: #fafafa;
-    }
-    .user-box {
-      max-width: 320px;
-      margin: 1rem auto;
-      text-align: center;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background: white;
-      border-top: 1px solid #ddd;
-      color: #777;
-      font-size: 0.85rem;
-    }
-  </style>
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>📰 Jornal da Escola</h1>
-    <p>Notícias, eventos e comentários</p>
+  <!-- CABEÇALHO -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <span class="header-logo">📰</span>
+        <div class="header-title-group">
+          <h1 class="site-title">Jornal da Escola</h1>
+          <p class="site-tagline">Notícias, eventos e comentários da comunidade</p>
+        </div>
+      </div>
+      <div class="header-meta">
+        <span class="header-badge">Edição diária</span>
+      </div>
+    </div>
   </header>
 
-  <nav>
-    <button onclick="irPara('inicio')">Início</button>
-    <button onclick="irPara('noticias')">Notícias</button>
-    <button onclick="irPara('eventos')">Eventos</button>
-    <button onclick="irPara('comentarios')">Comentários</button>
-    <button onclick="irPara('publicar')">Publicar</button>
-    <button onclick="irPara('login')">Entrar</button>
+  <!-- MENU -->
+  <nav class="main-nav">
+    <div class="nav-inner">
+      <button class="nav-btn" data-page="inicio">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-text">Início</span>
+      </button>
+      <button class="nav-btn" data-page="noticias">
+        <span class="nav-icon">📰</span>
+        <span class="nav-text">Notícias</span>
+      </button>
+      <button class="nav-btn" data-page="eventos">
+        <span class="nav-icon">📅</span>
+        <span class="nav-text">Eventos</span>
+      </button>
+      <button class="nav-btn" data-page="comentarios">
+        <span class="nav-icon">💬</span>
+        <span class="nav-text">Comentários</span>
+      </button>
+      <button class="nav-btn" data-page="publicar">
+        <span class="nav-icon">✏️</span>
+        <span class="nav-text">Publicar</span>
+      </button>
+      <button class="nav-btn" data-page="login">
+        <span class="nav-icon">🔐</span>
+        <span class="nav-text">Entrar</span>
+      </button>
+    </div>
   </nav>
 
-  <main>
+  <!-- CONTEÚDO -->
+  <main class="main-content">
     <!-- INÍCIO -->
-    <section id="inicio" class="secao ativa">
-      <h2>Bem-vindo ao Jornal da Escola!</h2>
-      <p>Use o menu acima para navegar.</p>
+    <section id="inicio" class="page active">
+      <div class="page-inner">
+        <header class="page-header">
+          <h2 class="page-title">Início</h2>
+          <p class="page-subtitle">Bem-vindo ao Jornal da Escola</p>
+        </header>
+
+        <div class="welcome">
+          <div class="welcome-card">
+            <h3>O que você encontra aqui</h3>
+            <div class="features">
+              <div class="feature">
+                <span class="feature-icon">📰</span>
+                <h4>Notícias</h4>
+                <p>Acompanhe as últimas novidades da escola.</p>
+              </div>
+              <div class="feature">
+                <span class="feature-icon">📅</span>
+                <h4>Eventos</h4>
+                <p>Confira a agenda de atividades e acontecimentos.</p>
+              </div>
+              <div class="feature">
+                <span class="feature-icon">💬</span>
+                <h4>Comentários</h4>
+                <p>Leia e participe das discussões.</p>
+              </div>
+              <div class="feature">
+                <span class="feature-icon">✏️</span>
+                <h4>Publicar</h4>
+                <p>Tem uma notícia? Faça login e publique!</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="quick-actions">
+            <h3>Acesso rápido</h3>
+            <div class="actions">
+              <button class="action-btn" onclick="navegar('noticias')">
+                <span class="action-icon">📰</span>
+                <span class="action-text">Ver notícias</span>
+              </button>
+              <button class="action-btn" onclick="navegar('eventos')">
+                <span class="action-icon">📅</span>
+                <span class="action-text">Ver eventos</span>
+              </button>
+              <button class="action-btn" onclick="navegar('publicar')">
+                <span class="action-icon">✏️</span>
+                <span class="action-text">Publicar</span>
+              </button>
+              <button class="action-btn" onclick="navegar('login')">
+                <span class="action-icon">🔐</span>
+                <span class="action-text">Entrar</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- NOTÍCIAS -->
-    <section id="noticias" class="secao">
-      <h2>Notícias</h2>
-      <div id="lista-noticias">Carregando...</div>
+    <section id="noticias" class="page">
+      <div class="page-inner">
+        <header class="page-header">
+          <h2 class="page-title">Notícias</h2>
+          <p class="page-subtitle">Últimas publicações</p>
+        </header>
+        <div id="lista-noticias" class="grid">
+          <div class="loading">Carregando notícias...</div>
+        </div>
+      </div>
     </section>
 
     <!-- EVENTOS -->
-    <section id="eventos" class="secao">
-      <h2>Eventos</h2>
-      <div id="lista-eventos">Carregando...</div>
+    <section id="eventos" class="page">
+      <div class="page-inner">
+        <header class="page-header">
+          <h2 class="page-title">Eventos</h2>
+          <p class="page-subtitle">Agenda escolar</p>
+        </header>
+        <div id="lista-eventos" class="grid">
+          <div class="loading">Carregando eventos...</div>
+        </div>
+      </div>
     </section>
 
     <!-- COMENTÁRIOS -->
-    <section id="comentarios" class="secao">
-      <h2>Comentários</h2>
-      <div id="lista-comentarios">Carregando...</div>
+    <section id="comentarios" class="page">
+      <div class="page-inner">
+        <header class="page-header">
+          <h2 class="page-title">Comentários</h2>
+          <p class="page-subtitle">Opiniões e discussões</p>
+        </header>
+        <div id="lista-comentarios" class="grid">
+          <div class="loading">Carregando comentários...</div>
+        </div>
+      </div>
     </section>
 
     <!-- PUBLICAR -->
-    <section id="publicar" class="secao">
-      <h2>Publicar</h2>
-      <div id="aviso-publicar">
-        <p>Faça login para publicar.</p>
-        <button onclick="irPara('login')">Ir para login</button>
-      </div>
-      <div id="form-publicar" style="display:none;">
-        <h3>Nova Notícia</h3>
-        <input type="text" id="titulo-noticia" placeholder="Título" />
-        <textarea id="conteudo-noticia" placeholder="Conteúdo" rows="4"></textarea>
-        <button onclick="publicarNoticia()">Publicar Notícia</button>
+    <section id="publicar" class="page">
+      <div class="page-inner">
+        <header class="page-header">
+          <h2 class="page-title">Publicar</h2>
+          <p class="page-subtitle">Crie notícias e eventos</p>
+        </header>
 
-        <h3 style="margin-top:1.2rem;">Novo Evento</h3>
-        <input type="text" id="titulo-evento" placeholder="Título" />
-        <input type="text" id="data-evento" placeholder="Data (ex: 25/09/2026)" />
-        <textarea id="conteudo-evento" placeholder="Descrição" rows="3"></textarea>
-        <button onclick="publicarEvento()">Publicar Evento</button>
+        <div id="aviso-login" class="info-box">
+          <span class="info-icon">🔐</span>
+          <h3>Área restrita</h3>
+          <p>Faça login para publicar conteúdo no jornal.</p>
+          <button class="btn-primary" onclick="navegar('login')">Fazer login</button>
+        </div>
 
-        <div id="msg-publicar" class="msg"></div>
+        <div id="form-publicar" class="publish" style="display:none;">
+          <div class="publish-grid">
+            <!-- NOTÍCIA -->
+            <div class="publish-card">
+              <div class="publish-head">
+                <span class="publish-icon">📰</span>
+                <h3>Nova Notícia</h3>
+              </div>
+              <div class="publish-body">
+                <div class="form-group">
+                  <label for="titulo-noticia">Título</label>
+                  <input type="text" id="titulo-noticia" placeholder="Digite o título" />
+                </div>
+                <div class="form-group">
+                  <label for="conteudo-noticia">Conteúdo</label>
+                  <textarea id="conteudo-noticia" placeholder="Escreva o conteúdo" rows="6"></textarea>
+                </div>
+                <button class="btn-primary btn-block" onclick="publicarNoticia()">Publicar Notícia</button>
+              </div>
+            </div>
+
+            <!-- EVENTO -->
+            <div class="publish-card">
+              <div class="publish-head">
+                <span class="publish-icon">📅</span>
+                <h3>Novo Evento</h3>
+              </div>
+              <div class="publish-body">
+                <div class="form-group">
+                  <label for="titulo-evento">Título</label>
+                  <input type="text" id="titulo-evento" placeholder="Digite o título" />
+                </div>
+                <div class="form-group">
+                  <label for="data-evento">Data</label>
+                  <input type="text" id="data-evento" placeholder="Ex: 25/09/2026" />
+                </div>
+                <div class="form-group">
+                  <label for="conteudo-evento">Descrição</label>
+                  <textarea id="conteudo-evento" placeholder="Descreva o evento" rows="5"></textarea>
+                </div>
+                <button class="btn-primary btn-block" onclick="publicarEvento()">Publicar Evento</button>
+              </div>
+            </div>
+          </div>
+          <div id="msg-publicar" class="form-msg"></div>
+        </div>
       </div>
     </section>
 
     <!-- LOGIN -->
-    <section id="login" class="secao">
-      <h2>Entrar</h2>
-      <div id="login-form" class="login-box">
-        <input type="text" id="login-nome" placeholder="Seu nome (ex: Gustavo)" />
-        <input type="password" id="login-senha" placeholder="Senha" />
-        <button onclick="fazerLogin()">Entrar</button>
-        <div id="msg-login" class="msg"></div>
-      </div>
-      <div id="user-info" class="user-box" style="display:none;">
-        <p style="font-size:1.1rem;font-weight:700;color:#1a73e8;">
-          Olá, <span id="nome-usuario">Usuário</span>!
-        </p>
-        <button onclick="fazerLogout()" style="margin-top:0.6rem;background:#dc2626;">Sair</button>
+    <section id="login" class="page">
+      <div class="page-inner">
+        <header class="page-header">
+          <h2 class="page-title">Entrar</h2>
+          <p class="page-subtitle">Acesse para publicar</p>
+        </header>
+
+        <div class="login-wrap">
+          <!-- FORM -->
+          <div id="login-form" class="login-card">
+            <div class="login-head">
+              <span class="login-badge">🔐</span>
+              <h3>Autenticação</h3>
+            </div>
+            <div class="login-body">
+              <div class="form-group">
+                <label for="login-nome">Nome</label>
+                <input type="text" id="login-nome" placeholder="Seu nome (ex: Gustavo)" />
+              </div>
+              <div class="form-group">
+                <label for="login-senha">Senha</label>
+                <input type="password" id="login-senha" placeholder="Sua senha" />
+              </div>
+              <button class="btn-primary btn-block" onclick="fazerLogin()">Entrar</button>
+              <div id="msg-login" class="form-msg"></div>
+            </div>
+          </div>
+
+          <!-- USER -->
+          <div id="user-area" class="user-card" style="display:none;">
+            <div class="user-head">
+              <div class="user-avatar">👤</div>
+              <div class="user-info">
+                <p class="user-hello">Bem-vindo(a),</p>
+                <h3 id="user-nome">Usuário</h3>
+              </div>
+            </div>
+            <button class="btn-danger btn-block" onclick="fazerLogout()">Sair</button>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer>
-    © 2026 Jornal da Escola
+  <!-- RODAPÉ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p>© 2026 Jornal da Escola - Todos os direitos reservados</p>
+      <p class="footer-note">Desenvolvido para a comunidade escolar</p>
+    </div>
   </footer>
 
+  <!-- SUPABASE -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    // CONFIGURAÇÃO DO SUPABASE
-    const SUPABASE_URL = 'https://whfyyenctppnociyfhfn.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable_OxuXce2Y68ZzFkO8G5Opwg_H-AmYXDw';
-
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    let usuarioAtual = null;
-
-    // NAVEGAÇÃO
-    function irPara(id) {
-      document.querySelectorAll('.secao').forEach(s => {
-        s.classList.remove('ativa');
-      });
-
-      const alvo = document.getElementById(id);
-      if (alvo) {
-        alvo.classList.add('ativa');
-      }
-
-      if (id === 'noticias') carregarNoticias();
-      if (id === 'eventos') carregarEventos();
-      if (id === 'comentarios') carregarComentarios();
-      if (id === 'publicar') atualizarPublicar();
-      if (id === 'login') atualizarLogin();
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // LOGIN
-    function atualizarLogin() {
-      const form = document.getElementById('login-form');
-      const info = document.getElementById('user-info');
-      const nomeSpan = document.getElementById('nome-usuario');
-
-      if (usuarioAtual) {
-        form.style.display = 'none';
-        info.style.display = 'block';
-        nomeSpan.textContent = usuarioAtual.nome;
-      } else {
-        form.style.display = 'block';
-        info.style.display = 'none';
-      }
-    }
-
-    async function fazerLogin() {
-      const nomeInput = document.getElementById('login-nome');
-      const senhaInput = document.getElementById('login-senha');
-      const msg = document.getElementById('msg-login');
-
-      const nome = nomeInput.value.trim();
-      const senha = senhaInput.value;
-
-      msg.textContent = '';
-      msg.className = 'msg';
-
-      if (!nome || !senha) {
-        msg.textContent = 'Digite nome e senha.';
-        msg.classList.add('erro');
-        return;
-      }
-
-      const email = nome.toLowerCase() + '@escola.com.br';
-
-      try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email,
-          password: senha
-        });
-
-        if (error) throw error;
-
-        usuarioAtual = {
-          id: data.user.id,
-          nome: nome.charAt(0).toUpperCase() + nome.slice(1).toLowerCase()
-        };
-
-        msg.textContent = 'Login realizado!';
-        msg.classList.add('sucesso');
-        nomeInput.value = '';
-        senhaInput.value = '';
-        atualizarLogin();
-      } catch (e) {
-        msg.textContent = 'Login falhou. Verifique nome e senha.';
-        msg.classList.add('erro');
-        console.error(e);
-      }
-    }
-
-    function fazerLogout() {
-      supabase.auth.signOut();
-      usuarioAtual = null;
-      atualizarLogin();
-      irPara('inicio');
-    }
-
-    // PUBLICAR
-    function atualizarPublicar() {
-      const aviso = document.getElementById('aviso-publicar');
-      const form = document.getElementById('form-publicar');
-
-      if (usuarioAtual) {
-        aviso.style.display = 'none';
-        form.style.display = 'block';
-      } else {
-        aviso.style.display = 'block';
-        form.style.display = 'none';
-      }
-    }
-
-    // NOTÍCIAS
-    async function carregarNoticias() {
-      const div = document.getElementById('lista-noticias');
-      div.textContent = 'Carregando...';
-
-      try {
-        const { data, error } = await supabase
-          .from('noticias')
-          .select('*')
-          .order('criado_em', { ascending: false });
-
-        if (error) throw error;
-
-        if (!data || data.length === 0) {
-          div.textContent = 'Nenhuma notícia ainda.';
-          return;
-        }
-
-        div.innerHTML = '';
-        data.forEach(n => {
-          const card = document.createElement('div');
-          card.className = 'card';
-
-          const dataFormatada = n.criado_em
-            ? new Date(n.criado_em).toLocaleDateString('pt-BR')
-            : '';
-
-          card.innerHTML = `
-            <strong>${escapeHtml(n.titulo || 'Sem título')}</strong>
-            <p>${escapeHtml(n.conteudo || '')}</p>
-            <div class="meta">Por ${escapeHtml(n.autor || 'Anônimo')} em ${dataFormatada}</div>
-          `;
-
-          div.appendChild(card);
-        });
-      } catch (e) {
-        div.textContent = 'Erro ao carregar notícias.';
-        console.error(e);
-      }
-    }
-
-    // EVENTOS
-    async function carregarEventos() {
-      const div = document.getElementById('lista-eventos');
-      div.textContent = 'Carregando...';
-
-      try {
-        const { data, error } = await supabase
-          .from('eventos')
-          .select('*')
-          .order('criado_em', { ascending: false });
-
-        if (error) throw error;
-
-        if (!data || data.length === 0) {
-          div.textContent = 'Nenhum evento ainda.';
-          return;
-        }
-
-        div.innerHTML = '';
-        data.forEach(e => {
-          const card = document.createElement('div');
-          card.className = 'card';
-
-          const dataFormatada = e.criado_em
-            ? new Date(e.criado_em).toLocaleDateString('pt-BR')
-            : '';
-
-          card.innerHTML = `
-            <strong>${escapeHtml(e.titulo || 'Sem título')}</strong>
-            <p><strong>Data:</strong> ${escapeHtml(e.data_evento || 'Sem data')}</p>
-            <p>${escapeHtml(e.conteudo || '')}</p>
-            <div class="meta">Por ${escapeHtml(e.autor || 'Anônimo')} em ${dataFormatada}</div>
-          `;
-
-          div.appendChild(card);
-        });
-      } catch (e) {
-        div.textContent = 'Erro ao carregar eventos.';
-        console.error(e);
-      }
-    }
-
-    // COMENTÁRIOS
-    async function carregarComentarios() {
-      const div = document.getElementById('lista-comentarios');
-      div.textContent = 'Carregando...';
-
-      try {
-        const { data, error } = await supabase
-          .from('comentarios')
-          .select('*')
-          .order('criado_em', { ascending: false });
-
-        if (error) throw error;
-
-        if (!data || data.length === 0) {
-          div.textContent = 'Nenhum comentário ainda.';
-          return;
-        }
-
-        div.innerHTML = '';
-        data.forEach(c => {
-          const card = document.createElement('div');
-          card.className = 'card';
-
-          const dataFormatada = c.criado_em
-            ? new Date(c.criado_em).toLocaleDateString('pt-BR')
-            : '';
-
-          card.innerHTML = `
-            <strong>${escapeHtml(c.autor || 'Anônimo')}</strong>
-            <p>${escapeHtml(c.conteudo || '')}</p>
-            <div class="meta">Em ${dataFormatada}</div>
-          `;
-
-          div.appendChild(card);
-        });
-      } catch (e) {
-        div.textContent = 'Erro ao carregar comentários.';
-        console.error(e);
-      }
-    }
-
-    // PUBLICAR NOTÍCIA
-    async function publicarNoticia() {
-      const tituloInput = document.getElementById('titulo-noticia');
-      const conteudoInput = document.getElementById('conteudo-noticia');
-      const msg = document.getElementById('msg-publicar');
-
-      const titulo = tituloInput.value.trim();
-      const conteudo = conteudoInput.value.trim();
-
-      msg.textContent = '';
-      msg.className = 'msg';
-
-      if (!usuarioAtual) {
-        msg.textContent = 'Faça login para publicar.';
-        msg.classList.add('erro');
-        return;
-      }
-
-      if (!titulo || !conteudo) {
-        msg.textContent = 'Preencha título e conteúdo.';
-        msg.classList.add('erro');
-        return;
-      }
-
-      try {
-        const { error } = await supabase.from('noticias').insert([{
-          titulo,
-          conteudo,
-          autor: usuarioAtual.nome,
-          criado_por: usuarioAtual.id,
-          criado_em: new Date().toISOString()
-        }]);
-
-        if (error) throw error;
-
-        msg.textContent = 'Notícia publicada!';
-        msg.classList.add('sucesso');
-        tituloInput.value = '';
-        conteudoInput.value = '';
-      } catch (e) {
-        msg.textContent = 'Erro ao publicar notícia.';
-        msg.classList.add('erro');
-        console.error(e);
-      }
-    }
-
-    // PUBLICAR EVENTO
-    async function publicarEvento() {
-      const tituloInput = document.getElementById('titulo-evento');
-      const dataInput = document.getElementById('data-evento');
-      const conteudoInput = document.getElementById('conteudo-evento');
-      const msg = document.getElementById('msg-publicar');
-
-      const titulo = tituloInput.value.trim();
-      const dataEvento = dataInput.value.trim();
-      const conteudo = conteudoInput.value.trim();
-
-      msg.textContent = '';
-      msg.className = 'msg';
-
-      if (!usuarioAtual) {
-        msg.textContent = 'Faça login para publicar.';
-        msg.classList.add('erro');
-        return;
-      }
-
-      if (!titulo || !conteudo) {
-        msg.textContent = 'Preencha título e descrição.';
-        msg.classList.add('erro');
-        return;
-      }
-
-      try {
-        const { error } = await supabase.from('eventos').insert([{
-          titulo,
-          data_evento: dataEvento,
-          conteudo,
-          autor: usuarioAtual.nome,
-          criado_por: usuarioAtual.id,
-          criado_em: new Date().toISOString()
-        }]);
-
-        if (error) throw error;
-
-        msg.textContent = 'Evento publicado!';
-        msg.classList.add('sucesso');
-        tituloInput.value = '';
-        dataInput.value = '';
-        conteudoInput.value = '';
-      } catch (e) {
-        msg.textContent = 'Erro ao publicar evento.';
-        msg.classList.add('erro');
-        console.error(e);
-      }
-    }
-
-    // UTILITÁRIO
-    function escapeHtml(text) {
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
-    }
-
-    // INICIALIZAÇÃO
-    window.addEventListener('DOMContentLoaded', () => {
-      irPara('inicio');
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
