@@ -1,4 +1,6 @@
-// CONFIGURAÇÃO DO SUPABASE
+// ============================================
+// CONFIGURAÇÃO SUPABASE
+// ============================================
 const SUPABASE_URL = 'https://whfyyenctppnociyfhfn.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_OxuXce2Y68ZzFkO8G5Opwg_H-AmYXDw';
 
@@ -6,72 +8,69 @@ const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 let usuarioAtual = null;
 
+// ============================================
 // NAVEGAÇÃO
-function initNavigation() {
-  const navItems = document.querySelectorAll('.nav-item, .nav-btn, .action-card, button[onclick]');
-  navItems.forEach(item => {
-    item.addEventListener('click', () => {
-      const targetId = item.getAttribute('data-target') ||
-                       item.getAttribute('data-section') ||
-                       (item.onclick && item.onclick.toString().match(/'(\w+)'/)?.[1]);
-      if (targetId) goToPage(targetId);
+// ============================================
+function initNav() {
+  const botoes = document.querySelectorAll('.nav-btn');
+  botoes.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const pagina = btn.getAttribute('data-page');
+      navegar(pagina);
+
+      botoes.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
     });
   });
 }
 
-function goToPage(pageId) {
-  document.querySelectorAll('.page-section, .content-section').forEach(sec => {
-    sec.classList.remove('active');
+function navegar(pagina) {
+  document.querySelectorAll('.page').forEach(p => {
+    p.classList.remove('active');
   });
 
-  const target = document.getElementById(pageId);
-  if (target) {
-    target.classList.add('active');
+  const alvo = document.getElementById(pagina);
+  if (alvo) {
+    alvo.classList.add('active');
   }
 
-  if (pageId === 'noticias') carregarNoticias();
-  if (pageId === 'eventos') carregarEventos();
-  if (pageId === 'comentarios') carregarComentarios();
-  if (pageId === 'publicar') atualizarTelaPublicar();
-  if (pageId === 'login') atualizarTelaLogin();
+  if (pagina === 'noticias') carregarNoticias();
+  if (pagina === 'eventos') carregarEventos();
+  if (pagina === 'comentarios') carregarComentarios();
+  if (pagina === 'publicar') atualizarPublicar();
+  if (pagina === 'login') atualizarLogin();
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// ============================================
 // LOGIN / LOGOUT
-function atualizarTelaLogin() {
-  const formBox = document.getElementById('login-form-box') ||
-                  document.getElementById('login-form-container');
-  const userBox = document.getElementById('user-logged-box') ||
-                  document.getElementById('user-info-container');
-
-  if (!formBox || !userBox) return;
+// ============================================
+function atualizarLogin() {
+  const form = document.getElementById('login-form');
+  const user = document.getElementById('user-area');
+  const nomeEl = document.getElementById('user-nome');
 
   if (usuarioAtual) {
-    formBox.style.display = 'none';
-    userBox.style.display = 'block';
-    const nomeExibicao = document.getElementById('user-nome-exibicao') ||
-                         document.getElementById('user-name-display');
-    if (nomeExibicao) nomeExibicao.textContent = usuarioAtual.nome;
+    form.style.display = 'none';
+    user.style.display = 'block';
+    nomeEl.textContent = usuarioAtual.nome;
   } else {
-    formBox.style.display = 'block';
-    userBox.style.display = 'none';
+    form.style.display = 'block';
+    user.style.display = 'none';
   }
 }
 
-async function realizarLogin() {
-  const nomeInput = document.getElementById('login-nome') ||
-                    document.getElementById('login-usuario');
+async function fazerLogin() {
+  const nomeInput = document.getElementById('login-nome');
   const senhaInput = document.getElementById('login-senha');
   const msg = document.getElementById('msg-login');
-
-  if (!nomeInput || !senhaInput || !msg) return;
 
   const nome = nomeInput.value.trim();
   const senha = senhaInput.value;
 
   msg.textContent = '';
-  msg.className = 'form-feedback';
+  msg.className = 'form-msg';
 
   if (!nome || !senha) {
     msg.textContent = 'Digite nome e senha.';
@@ -98,7 +97,7 @@ async function realizarLogin() {
     msg.classList.add('success');
     nomeInput.value = '';
     senhaInput.value = '';
-    atualizarTelaLogin();
+    atualizarLogin();
   } catch (e) {
     msg.textContent = 'Login falhou. Verifique nome e senha.';
     msg.classList.add('error');
@@ -106,37 +105,35 @@ async function realizarLogin() {
   }
 }
 
-function realizarLogout() {
+function fazerLogout() {
   supabase.auth.signOut();
   usuarioAtual = null;
-  atualizarTelaLogin();
-  goToPage('inicio');
+  atualizarLogin();
+  navegar('inicio');
 }
 
-// TELA DE PUBLICAR
-function atualizarTelaPublicar() {
-  const aviso = document.getElementById('aviso-login-publicar') ||
-                document.getElementById('aviso-publicar');
-  const formContainer = document.getElementById('form-publicar-container') ||
-                        document.getElementById('form-publicar');
-
-  if (!aviso || !formContainer) return;
+// ============================================
+// PUBLICAR (TELA)
+// ============================================
+function atualizarPublicar() {
+  const aviso = document.getElementById('aviso-login');
+  const form = document.getElementById('form-publicar');
 
   if (usuarioAtual) {
     aviso.style.display = 'none';
-    formContainer.style.display = 'block';
+    form.style.display = 'block';
   } else {
     aviso.style.display = 'block';
-    formContainer.style.display = 'none';
+    form.style.display = 'none';
   }
 }
 
+// ============================================
 // CARREGAR NOTÍCIAS
+// ============================================
 async function carregarNoticias() {
-  const container = document.getElementById('lista-noticias');
-  if (!container) return;
-
-  container.innerHTML = '<div class="empty-state">Carregando notícias...</div>';
+  const div = document.getElementById('lista-noticias');
+  div.innerHTML = '<div class="loading">Carregando notícias...</div>';
 
   try {
     const { data, error } = await supabase
@@ -147,36 +144,39 @@ async function carregarNoticias() {
     if (error) throw error;
 
     if (!data || data.length === 0) {
-      container.innerHTML = '<div class="empty-state">Nenhuma notícia ainda.</div>';
+      div.innerHTML = '<div class="empty">Nenhuma notícia ainda.</div>';
       return;
     }
 
-    container.innerHTML = '';
+    div.innerHTML = '';
     data.forEach(n => {
       const card = document.createElement('div');
-      card.className = 'news-card';
+      card.className = 'card';
+
       const dataFormatada = n.criado_em
         ? new Date(n.criado_em).toLocaleDateString('pt-BR')
         : '';
+
       card.innerHTML = `
         <h4>${escapeHtml(n.titulo || 'Sem título')}</h4>
         <p>${escapeHtml(n.conteudo || '')}</p>
-        <div class="meta-info">Por ${escapeHtml(n.autor || 'Anônimo')} em ${dataFormatada}</div>
+        <div class="meta">Por ${escapeHtml(n.autor || 'Anônimo')} em ${dataFormatada}</div>
       `;
-      container.appendChild(card);
+
+      div.appendChild(card);
     });
   } catch (e) {
-    container.innerHTML = '<div class="empty-state">Erro ao carregar notícias.</div>';
+    div.innerHTML = '<div class="empty">Erro ao carregar notícias.</div>';
     console.error(e);
   }
 }
 
+// ============================================
 // CARREGAR EVENTOS
+// ============================================
 async function carregarEventos() {
-  const container = document.getElementById('lista-eventos');
-  if (!container) return;
-
-  container.innerHTML = '<div class="empty-state">Carregando eventos...</div>';
+  const div = document.getElementById('lista-eventos');
+  div.innerHTML = '<div class="loading">Carregando eventos...</div>';
 
   try {
     const { data, error } = await supabase
@@ -187,37 +187,40 @@ async function carregarEventos() {
     if (error) throw error;
 
     if (!data || data.length === 0) {
-      container.innerHTML = '<div class="empty-state">Nenhum evento ainda.</div>';
+      div.innerHTML = '<div class="empty">Nenhum evento ainda.</div>';
       return;
     }
 
-    container.innerHTML = '';
+    div.innerHTML = '';
     data.forEach(e => {
       const card = document.createElement('div');
-      card.className = 'event-card';
+      card.className = 'card';
+
       const dataFormatada = e.criado_em
         ? new Date(e.criado_em).toLocaleDateString('pt-BR')
         : '';
+
       card.innerHTML = `
         <h4>${escapeHtml(e.titulo || 'Sem título')}</h4>
         <p><strong>Data:</strong> ${escapeHtml(e.data_evento || 'Sem data')}</p>
         <p>${escapeHtml(e.conteudo || '')}</p>
-        <div class="meta-info">Por ${escapeHtml(e.autor || 'Anônimo')} em ${dataFormatada}</div>
+        <div class="meta">Por ${escapeHtml(e.autor || 'Anônimo')} em ${dataFormatada}</div>
       `;
-      container.appendChild(card);
+
+      div.appendChild(card);
     });
   } catch (e) {
-    container.innerHTML = '<div class="empty-state">Erro ao carregar eventos.</div>';
+    div.innerHTML = '<div class="empty">Erro ao carregar eventos.</div>';
     console.error(e);
   }
 }
 
+// ============================================
 // CARREGAR COMENTÁRIOS
+// ============================================
 async function carregarComentarios() {
-  const container = document.getElementById('lista-comentarios');
-  if (!container) return;
-
-  container.innerHTML = '<div class="empty-state">Carregando comentários...</div>';
+  const div = document.getElementById('lista-comentarios');
+  div.innerHTML = '<div class="loading">Carregando comentários...</div>';
 
   try {
     const { data, error } = await supabase
@@ -228,43 +231,46 @@ async function carregarComentarios() {
     if (error) throw error;
 
     if (!data || data.length === 0) {
-      container.innerHTML = '<div class="empty-state">Nenhum comentário ainda.</div>';
+      div.innerHTML = '<div class="empty">Nenhum comentário ainda.</div>';
       return;
     }
 
-    container.innerHTML = '';
+    div.innerHTML = '';
     data.forEach(c => {
       const card = document.createElement('div');
-      card.className = 'comment-card';
+      card.className = 'card';
+
       const dataFormatada = c.criado_em
         ? new Date(c.criado_em).toLocaleDateString('pt-BR')
         : '';
+
       card.innerHTML = `
         <h4>${escapeHtml(c.autor || 'Anônimo')}</h4>
         <p>${escapeHtml(c.conteudo || '')}</p>
-        <div class="meta-info">Em ${dataFormatada}</div>
+        <div class="meta">Em ${dataFormatada}</div>
       `;
-      container.appendChild(card);
+
+      div.appendChild(card);
     });
   } catch (e) {
-    container.innerHTML = '<div class="empty-state">Erro ao carregar comentários.</div>';
+    div.innerHTML = '<div class="empty">Erro ao carregar comentários.</div>';
     console.error(e);
   }
 }
 
+// ============================================
 // PUBLICAR NOTÍCIA
+// ============================================
 async function publicarNoticia() {
   const tituloInput = document.getElementById('titulo-noticia');
   const conteudoInput = document.getElementById('conteudo-noticia');
   const msg = document.getElementById('msg-publicar');
 
-  if (!tituloInput || !conteudoInput || !msg) return;
-
   const titulo = tituloInput.value.trim();
   const conteudo = conteudoInput.value.trim();
 
   msg.textContent = '';
-  msg.className = 'form-feedback';
+  msg.className = 'form-msg';
 
   if (!usuarioAtual) {
     msg.textContent = 'Faça login para publicar.';
@@ -300,21 +306,21 @@ async function publicarNoticia() {
   }
 }
 
+// ============================================
 // PUBLICAR EVENTO
+// ============================================
 async function publicarEvento() {
   const tituloInput = document.getElementById('titulo-evento');
   const dataInput = document.getElementById('data-evento');
   const conteudoInput = document.getElementById('conteudo-evento');
   const msg = document.getElementById('msg-publicar');
 
-  if (!tituloInput || !dataInput || !conteudoInput || !msg) return;
-
   const titulo = tituloInput.value.trim();
   const dataEvento = dataInput.value.trim();
   const conteudo = conteudoInput.value.trim();
 
   msg.textContent = '';
-  msg.className = 'form-feedback';
+  msg.className = 'form-msg';
 
   if (!usuarioAtual) {
     msg.textContent = 'Faça login para publicar.';
@@ -352,15 +358,19 @@ async function publicarEvento() {
   }
 }
 
+// ============================================
 // UTILITÁRIO
+// ============================================
 function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
 }
 
+// ============================================
 // INICIALIZAÇÃO
+// ============================================
 window.addEventListener('DOMContentLoaded', () => {
-  initNavigation();
-  goToPage('inicio');
+  initNav();
+  navegar('inicio');
 });
